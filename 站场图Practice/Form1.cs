@@ -39,6 +39,7 @@ namespace 站场图Practice
 
         public int count = 0;//SJnP_8
         public int count1 = 0;//Scnp_3
+        public int dcount = 0;//Sjnp_8
 
         public int drt;
         Panel front = new Panel();
@@ -93,6 +94,10 @@ namespace 站场图Practice
         /// </summary>
 
         Thread scnp_3 = null;
+        Thread sjnp_8 = null;
+
+
+
 
 
 
@@ -117,7 +122,7 @@ namespace 站场图Practice
             this.Show();
             DrawLine();
             trainTimer.Interval = 300;
-            this.trainTimer.Tick += new EventHandler(SJnP_8);
+
             Font LineId = new Font("宋体", 8);
             snake[0].X = 1050;
             snake[0].Y = 300;
@@ -129,6 +134,12 @@ namespace 站场图Practice
 
             scnp_3 = new Thread(SCnP_3);
             scnp_3.Start();
+
+            sjnp_8 = new Thread(SJnP_8);
+            Train train1 = new Train() { arrTime = 123,depTime=130,direction = 1,LineID = 8,trainID = "K21"};
+            sjnp_8.Start(train1);
+
+
 
 
         }
@@ -179,47 +190,125 @@ namespace 站场图Practice
             }
             
         }
-        public void SJnP_8(object sender, EventArgs e)
+        public void SJnP_8(object train)
         {
-           
-            Point temp = snake[0];
-            DrawTrain(temp.X, temp.Y, Color.Red);
-            if (count == 0)
+
+            
+            //主循环，控制动画
+            while (true)
             {
+                //每隔0.3秒更新一次
+                Thread.Sleep(300);
+
+                //程序主体
+                Point temp = snake[0];
                 DrawTrain(temp.X, temp.Y, Color.Red);
-                count++;
-            }
+                DrawRedLight(S8red);
 
+                if (count == 0)
+                {
+                    DrawTrain(temp.X, temp.Y, Color.Red);
+                    count++;
+                }
+                if ((dcount == 7) || (dcount > 7))
+                {
+                    DrawRedLight(Sred);
+                    dcount++;
+                }
+                if (dcount < 7)
+                {
+                    DrawGreenLight(SGreen);
+                    dcount++;
+                }
+                if (snake[0].X == 960)
+                {
+                    DrawRedLight(Sred);
+                    TurnOff(SGreen);
+                }
+                if (snake[0].X > 750)
+                {
+                    snake[0].X = temp.X - 15;
+                }
+                if (snake[0].X == 750)
+                {
+                    snake[0].Y = temp.Y + 25;
+                    snake[0].X = temp.X - 15;
+                }
+                if (snake[0].X == 675)
+                {
+                    snake[0].Y = temp.Y + 50;
+                    snake[0].X = temp.X - 15;
+                }
+                if (snake[0].X == 615)
+                {
+                    snake[0].Y = temp.Y + 50;
+                    snake[0].X = temp.X - 15;
+                }
 
-            if (snake[0].X > 750)
-            {
-                snake[0].X = temp.X - 15;
-            }
-            if (snake[0].X == 750)
-            {
-                snake[0].Y = temp.Y + 25;
-                snake[0].X = temp.X - 15;
-            }
-            if (snake[0].X == 675)
-            {
-                snake[0].Y = temp.Y + 50;
-                snake[0].X = temp.X - 15;
-            }
-            if (snake[0].X == 615)
-            {
-                snake[0].Y = temp.Y + 50;
-                snake[0].X = temp.X - 15;
-            }
+                if ((snake[0].X > 615) && (snake[0].X < 745))
+                {
+                    snake[0].X = temp.X - 15;
+                }
+                if ((snake[0].X < 675) && (snake[0].X > 420) && (snake[0].X != 420))
+                {
+                    snake[0].X = temp.X - 15;
+                }
+                DrawTrain(snake[0].X, snake[0].Y, Color.Red);
+                if (snake[0].X == 420)
+                {
+                    Thread.Sleep(1000*(((Train)train).depTime- ((Train)train).arrTime));
+                    DrawGreenLight(S8Green);
+                    TurnOff(S8red);
+                    while (true)
+                    {
+                        Thread.Sleep(300);
+                        temp = snake[0];
+                        DrawTrain(snake[0].X, snake[0].Y, Color.Red);
+                        if (snake[0].X == 420)
+                        {
+                            snake[0].X = temp.X - 15;
+                        }
+                        if (snake[0].X < 420)
+                        {
+                            snake[0].X = temp.X - 15;
+                        }
+                        if (snake[0].X == 330)
+                        {
+                            snake[0].Y = temp.Y - 50;
+                            snake[0].X = temp.X - 15;
+                        }
+                        if (snake[0].X == 300)
+                        {
+                            snake[0].Y = temp.Y - 50;
+                            snake[0].X = temp.X - 15;
+                        }
+                        if (snake[0].X == 195)
+                        {
+                            snake[0].Y = temp.Y - 50;
+                            snake[0].X = temp.X - 15;
+                        }
+                        DrawTrain(snake[0].X, snake[0].Y, Color.Red);
+                        if ((snake[0].X == 415)||(snake[0].X< 415))
+                        {
+                            TurnOff(S8Green);
+                            DrawRedLight(S8red);
+                        }
+                            if (snake[0].X == 0)
+                        {
+                            break;
+                        }
 
-            if ((snake[0].X > 615) && (snake[0].X < 745))
-            {
-                snake[0].X = temp.X - 15;
+                    }
+                }
+
+                //再退一次
+                if (snake[0].X == 0)
+                {
+                    DrawTrain(snake[0].X, snake[0].Y, Color.Red);
+                    break;
+                }
+
             }
-            if ((snake[0].X < 675) && (snake[0].X > 420) && (snake[0].X != 420))
-            {
-                snake[0].X = temp.X - 15;
-            }
-            DrawTrain(snake[0].X, snake[0].Y, Color.Red);
 
         }
 
@@ -408,18 +497,54 @@ namespace 站场图Practice
         }
         public void DrawRedLight(Point point)
         {
-            Graphics g = back.CreateGraphics();
-            g.FillEllipse(Brushes.Red, point.X, point.Y, 5, 5);
+            try
+            {
+                Graphics g = back.CreateGraphics();
+                g.FillEllipse(Brushes.Red, point.X, point.Y, 5, 5);
+            }
+            catch (Exception)
+            {
+                
+               
+            }
+           
         }
         public void DrawGreenLight(Point point)
         {
-            Graphics g = back.CreateGraphics();
-            g.FillEllipse(Brushes.Green, point.X, point.Y, 5, 5);
+            try
+            {
+                Graphics g = back.CreateGraphics();
+                g.FillEllipse(Brushes.Green, point.X, point.Y, 5, 5);
+            }
+            catch (Exception)
+            {
+
+              
+            }
+           
         }
         public void TurnOff(Point point)
         {
-            Graphics g = back.CreateGraphics();
-            g.FillEllipse(Brushes.Black, point.X, point.Y, 5, 5);
+            try
+            {
+                Graphics g = back.CreateGraphics();
+                g.FillEllipse(Brushes.Black, point.X, point.Y, 5, 5);
+            }
+            catch (Exception)
+            {
+
+                
+            }
+           
         }
     }
+    public class Train
+    {
+        public string trainID { get; set; }
+        public int direction { get; set; }
+        public int LineID { get; set; }
+        public int arrTime { get; set; }
+        public int depTime { get; set; }
+    }
+    
 }
