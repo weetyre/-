@@ -62,7 +62,16 @@ namespace 站场图Practice
         public int drt;
         Panel front = new Panel();
         Panel back = new Panel();
-        DateTime dt = new DateTime(2018, 9, 20, 8, 20, 00);
+        Label label = new Label();
+        DateTime dt;
+
+        //总分钟变化
+        public int totalMin = 0;
+
+
+
+
+
         System.Windows.Forms.Timer trainTimer = new System.Windows.Forms.Timer();
         Point[] snake = new Point[12];
         int second = 0;
@@ -123,6 +132,7 @@ namespace 站场图Practice
         Thread xnp_8 = null;
         Thread xp = null;
         Thread sp = null;
+        Thread timer = null;
         public Field()
         {
             this.WindowState = FormWindowState.Normal;//bug fix
@@ -145,7 +155,7 @@ namespace 站场图Practice
             Font LineId = new Font("宋体", 8);
             NameThread();//生成线程
             Namesnake();//确定各动画起始点
-            Train train1 = new Train() { arrTime = 123, depTime = 130, direction = 2, LineID = 3, trainID = "K21" };     
+            Train train1 = new Train() { arrTime = 123, depTime = 130, direction = 2, LineID = 3, trainID = "K21" };
             Assign(train1);//按照列车的方向与股道筛选动画并执行
         }
         public void SnP_3(object train)
@@ -552,7 +562,7 @@ namespace 站场图Practice
                             snake[2].Y = temp.Y - 50;
                             snake[2].X = temp.X - 15;
                         }
-                                       
+
                         DrawTrain(snake[2].X, snake[2].Y, Color.Red);
                         if ((snake[2].X == 415) || (snake[2].X < 415))
                         {
@@ -580,7 +590,7 @@ namespace 站场图Practice
         public void SnP_8(object train)
         {
 
-            
+
             //主循环，控制动画
             while (true)
             {
@@ -643,7 +653,7 @@ namespace 站场图Practice
                 DrawTrain(snake[0].X, snake[0].Y, Color.Red);
                 if (snake[0].X == 420)
                 {
-                    Thread.Sleep(1000*(((Train)train).depTime- ((Train)train).arrTime));
+                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S8Green);
                     TurnOff(S8red);
                     while (true)
@@ -675,12 +685,12 @@ namespace 站场图Practice
                             snake[0].X = temp.X - 15;
                         }
                         DrawTrain(snake[0].X, snake[0].Y, Color.Red);
-                        if ((snake[0].X == 415)||(snake[0].X< 415))
+                        if ((snake[0].X == 415) || (snake[0].X < 415))
                         {
                             TurnOff(S8Green);
                             DrawRedLight(S8red);
                         }
-                            if (snake[0].X == 0)
+                        if (snake[0].X == 0)
                         {
                             break;
                         }
@@ -830,7 +840,7 @@ namespace 站场图Practice
                 {
                     DrawRedLight(Xred);
                     TurnOff(XGreen);
-                }               
+                }
                 if (snake[6].X == 195)
                 {
                     snake[6].Y = temp.Y - 25;
@@ -1277,7 +1287,7 @@ namespace 站场图Practice
                 Point temp = snake[10];
                 DrawTrain(temp.X, temp.Y, Color.Red);
                 TurnOff(Xred);
-               
+
                 if (count10 == 0)
                 {
                     DrawTrain(temp.X, temp.Y, Color.Red);
@@ -1302,9 +1312,9 @@ namespace 站场图Practice
                 {
                     snake[10].X = temp.X + 15;
                 }
-                
+
                 DrawTrain(snake[10].X, snake[10].Y, Color.Red);
-                
+
 
                 //再退一次
                 if (snake[10].X == 1200)
@@ -1344,7 +1354,7 @@ namespace 站场图Practice
                 {
                     DrawGreenLight(SGreen);
                     scount++;
-                }             
+                }
                 if (snake[11].X == 960)
                 {
                     DrawRedLight(Sred);
@@ -1368,7 +1378,7 @@ namespace 站场图Practice
             }
 
         }
-        public void DrawTrain(int x, int y,System.Drawing.Color color)
+        public void DrawTrain(int x, int y, System.Drawing.Color color)
         {
             try
             {
@@ -1398,15 +1408,13 @@ namespace 站场图Practice
             {
                 snp_3.Abort();
             }
-            
+
 
         }
         public void DrawLine()
         {
             Graphics g = back.CreateGraphics();
-            Font LineId = new Font("宋体", 8);
-            g.DrawString(dt.ToString(), LineId, Brushes.White, (float)0, (float)0);
-
+            Font font = new Font("宋体", 8);
             //股道
             g.DrawLine(new Pen(Color.White), 350, 150, 650, 150);
             g.DrawLine(new Pen(Color.White), 200, 200, 1100, 200);
@@ -1456,99 +1464,99 @@ namespace 站场图Practice
             g.DrawLine(new Pen(Color.White), 675, 175, 800, 175);
             g.DrawLine(new Pen(Color.White), 800, 175, 825, 200);
             //股道标号
-            g.DrawString("5道", LineId, Brushes.White, (float)470, (float)155);
-            g.DrawString("3道", LineId, Brushes.White, (float)470, (float)205);
-            g.DrawString("Ⅰ道", LineId, Brushes.White, (float)470, (float)255);
-            g.DrawString("Ⅱ道", LineId, Brushes.White, (float)470, (float)305);
-            g.DrawString("4道", LineId, Brushes.White, (float)470, (float)355);
-            g.DrawString("6道", LineId, Brushes.White, (float)470, (float)405);
-            g.DrawString("8道", LineId, Brushes.White, (float)470, (float)455);
+            g.DrawString("5道", font, Brushes.White, (float)470, (float)155);
+            g.DrawString("3道", font, Brushes.White, (float)470, (float)205);
+            g.DrawString("Ⅰ道", font, Brushes.White, (float)470, (float)255);
+            g.DrawString("Ⅱ道", font, Brushes.White, (float)470, (float)305);
+            g.DrawString("4道", font, Brushes.White, (float)470, (float)355);
+            g.DrawString("6道", font, Brushes.White, (float)470, (float)405);
+            g.DrawString("8道", font, Brushes.White, (float)470, (float)455);
             //道岔编号
-            g.DrawString("1", LineId, Brushes.White, (float)50, (float)253);
-            g.DrawString("3", LineId, Brushes.White, (float)97, (float)303);
-            g.DrawString("5", LineId, Brushes.White, (float)117, (float)303);
-            g.DrawString("7", LineId, Brushes.White, (float)135, (float)253);
-            g.DrawString("9", LineId, Brushes.White, (float)195, (float)237);
-            g.DrawString("11", LineId, Brushes.White, (float)233, (float)190);
-            g.DrawString("13", LineId, Brushes.White, (float)193, (float)305);
-            g.DrawString("15", LineId, Brushes.White, (float)243, (float)355);
-            g.DrawString("17", LineId, Brushes.White, (float)268, (float)355);
-            g.DrawString("19", LineId, Brushes.White, (float)338, (float)405);
-            g.DrawString("21", LineId, Brushes.White, (float)388, (float)455);
-            g.DrawString("23", LineId, Brushes.White, (float)289, (float)190);
-            g.DrawString("2", LineId, Brushes.White, (float)935, (float)240);
-            g.DrawString("4", LineId, Brushes.White, (float)895, (float)300);
-            g.DrawString("6", LineId, Brushes.White, (float)860, (float)300);
-            g.DrawString("8", LineId, Brushes.White, (float)820, (float)240);
-            g.DrawString("10", LineId, Brushes.White, (float)785, (float)255);
-            g.DrawString("12", LineId, Brushes.White, (float)745, (float)190);
-            g.DrawString("14", LineId, Brushes.White, (float)785, (float)285);
-            g.DrawString("16", LineId, Brushes.White, (float)745, (float)355);
-            g.DrawString("18", LineId, Brushes.White, (float)695, (float)340);
-            g.DrawString("20", LineId, Brushes.White, (float)640, (float)385);
-            g.DrawString("22", LineId, Brushes.White, (float)585, (float)435);
-            g.DrawString("24", LineId, Brushes.White, (float)835, (float)340);
-            g.DrawString("26", LineId, Brushes.White, (float)820, (float)190);
-            g.DrawString("28", LineId, Brushes.White, (float)695, (float)190);
-            g.DrawString("30", LineId, Brushes.White, (float)670, (float)160);
+            g.DrawString("1", font, Brushes.White, (float)50, (float)253);
+            g.DrawString("3", font, Brushes.White, (float)97, (float)303);
+            g.DrawString("5", font, Brushes.White, (float)117, (float)303);
+            g.DrawString("7", font, Brushes.White, (float)135, (float)253);
+            g.DrawString("9", font, Brushes.White, (float)195, (float)237);
+            g.DrawString("11", font, Brushes.White, (float)233, (float)190);
+            g.DrawString("13", font, Brushes.White, (float)193, (float)305);
+            g.DrawString("15", font, Brushes.White, (float)243, (float)355);
+            g.DrawString("17", font, Brushes.White, (float)268, (float)355);
+            g.DrawString("19", font, Brushes.White, (float)338, (float)405);
+            g.DrawString("21", font, Brushes.White, (float)388, (float)455);
+            g.DrawString("23", font, Brushes.White, (float)289, (float)190);
+            g.DrawString("2", font, Brushes.White, (float)935, (float)240);
+            g.DrawString("4", font, Brushes.White, (float)895, (float)300);
+            g.DrawString("6", font, Brushes.White, (float)860, (float)300);
+            g.DrawString("8", font, Brushes.White, (float)820, (float)240);
+            g.DrawString("10", font, Brushes.White, (float)785, (float)255);
+            g.DrawString("12", font, Brushes.White, (float)745, (float)190);
+            g.DrawString("14", font, Brushes.White, (float)785, (float)285);
+            g.DrawString("16", font, Brushes.White, (float)745, (float)355);
+            g.DrawString("18", font, Brushes.White, (float)695, (float)340);
+            g.DrawString("20", font, Brushes.White, (float)640, (float)385);
+            g.DrawString("22", font, Brushes.White, (float)585, (float)435);
+            g.DrawString("24", font, Brushes.White, (float)835, (float)340);
+            g.DrawString("26", font, Brushes.White, (float)820, (float)190);
+            g.DrawString("28", font, Brushes.White, (float)695, (float)190);
+            g.DrawString("30", font, Brushes.White, (float)670, (float)160);
 
-            g.DrawString("郑西高铁上行", LineId, Brushes.Orange, (float)100, (float)370);
+            g.DrawString("郑西高铁上行", font, Brushes.Orange, (float)100, (float)370);
             g.DrawLine(new Pen(Color.Orange), 100, 360, 170, 360);
             g.DrawLine(new Pen(Color.Orange), 100, 360, 110, 370);
 
-            g.DrawString("郑西高铁下行", LineId, Brushes.Orange, (float)1150, (float)210);
+            g.DrawString("郑西高铁下行", font, Brushes.Orange, (float)1150, (float)210);
             g.DrawLine(new Pen(Color.Orange), 1150, 230, 1220, 230);
             g.DrawLine(new Pen(Color.Orange), 1220, 230, 1210, 220);
             //信号灯及其编号
-            g.DrawString("X", LineId, Brushes.White, (float)30, (float)240);
+            g.DrawString("X", font, Brushes.White, (float)30, (float)240);
 
 
-            g.DrawString("XF", LineId, Brushes.White, (float)30, (float)300);
+            g.DrawString("XF", font, Brushes.White, (float)30, (float)300);
 
 
-            g.DrawString("X1", LineId, Brushes.White, (float)735, (float)240);
+            g.DrawString("X1", font, Brushes.White, (float)735, (float)240);
 
-            g.DrawString("X2", LineId, Brushes.White, (float)735, (float)290);
-
-
-            g.DrawString("X3", LineId, Brushes.White, (float)595, (float)190);
+            g.DrawString("X2", font, Brushes.White, (float)735, (float)290);
 
 
-            g.DrawString("X4", LineId, Brushes.White, (float)645, (float)340);
+            g.DrawString("X3", font, Brushes.White, (float)595, (float)190);
 
 
-            g.DrawString("X6", LineId, Brushes.White, (float)585, (float)390);
+            g.DrawString("X4", font, Brushes.White, (float)645, (float)340);
 
 
-            g.DrawString("X8", LineId, Brushes.White, (float)540, (float)440);
+            g.DrawString("X6", font, Brushes.White, (float)585, (float)390);
 
 
-            g.DrawString("X5", LineId, Brushes.White, (float)595, (float)140);
+            g.DrawString("X8", font, Brushes.White, (float)540, (float)440);
 
 
-            g.DrawString("S1", LineId, Brushes.White, (float)238, (float)250);
+            g.DrawString("X5", font, Brushes.White, (float)595, (float)140);
 
 
-            g.DrawString("S2", LineId, Brushes.White, (float)238, (float)300);
+            g.DrawString("S1", font, Brushes.White, (float)238, (float)250);
 
 
-            g.DrawString("S3", LineId, Brushes.White, (float)389, (float)200);
+            g.DrawString("S2", font, Brushes.White, (float)238, (float)300);
 
 
-            g.DrawString("S4", LineId, Brushes.White, (float)318, (float)355);
-
-            g.DrawString("S6", LineId, Brushes.White, (float)398, (float)405);
+            g.DrawString("S3", font, Brushes.White, (float)389, (float)200);
 
 
-            g.DrawString("S8", LineId, Brushes.White, (float)418, (float)455);
+            g.DrawString("S4", font, Brushes.White, (float)318, (float)355);
 
-            g.DrawString("S5", LineId, Brushes.White, (float)389, (float)150);
-
-
-            g.DrawString("SF", LineId, Brushes.White, (float)985, (float)240);
+            g.DrawString("S6", font, Brushes.White, (float)398, (float)405);
 
 
-            g.DrawString("S", LineId, Brushes.White, (float)985, (float)303);
+            g.DrawString("S8", font, Brushes.White, (float)418, (float)455);
+
+            g.DrawString("S5", font, Brushes.White, (float)389, (float)150);
+
+
+            g.DrawString("SF", font, Brushes.White, (float)985, (float)240);
+
+
+            g.DrawString("S", font, Brushes.White, (float)985, (float)303);
 
         }
         public void DrawRedLight(Point point)
@@ -1560,10 +1568,10 @@ namespace 站场图Practice
             }
             catch (Exception)
             {
-                
-               
+
+
             }
-           
+
         }
         public void DrawGreenLight(Point point)
         {
@@ -1575,9 +1583,9 @@ namespace 站场图Practice
             catch (Exception)
             {
 
-              
+
             }
-           
+
         }
         public void TurnOff(Point point)
         {
@@ -1589,17 +1597,31 @@ namespace 站场图Practice
             catch (Exception)
             {
 
-                
+
             }
-           
+
         }
         public void Assign(object train)
         {
+            //开始计时
+            timer.Start();
+            //更具具体的分钟，分配具体的车
+            /*
+             1. 整体放在while循环中，终止条件为 可调度车数为零
+             2. totalMin是当前的时间，从0开始，一直处于变化的过程中（每隔一秒添加1），最笨的方法，所有可调度车都写为if
+             条件判断，循环等待执行，然后每轮到一个车，就进入其循环，进行if跟进一步的逻辑判断，执行对应线程，执行一进入if
+             则下次执行的时候就不用执行
+             
+             
+             */
+
+
+
             //direction:1为下行（向左） 2为上行（向右）
-            if ((((Train)train).direction == 1)&& (((Train)train).LineID == 1))
+            if ((((Train)train).direction == 1) && (((Train)train).LineID == 1))
             {
                 xp.Start(train);
-            }            
+            }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 3))
             {
                 xnp_3.Start(train);
@@ -1644,7 +1666,6 @@ namespace 站场图Practice
             {
                 snp_8.Start(train);
             }
-
 
         }//根据列车选择动画的方法
         public void Namesnake()
@@ -1714,6 +1735,39 @@ namespace 站场图Practice
             xnp_8 = new Thread(Xnp_8);
             xp = new Thread(Xp);
             sp = new Thread(Sp);
+            timer = new Thread(ShowTime);
+        }
+        public void ShowTime()
+        {
+           
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 8);      
+            int hour = 0;
+            int min = 0;
+
+
+            //循环，根据车辆总共数目走，等数目走完终止程序结束循环
+            while (totalMin!=1440)
+            {
+                Thread.Sleep(1000);
+                //先消除以前的时间
+
+                g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 200, 10));
+
+                g.DrawString("当前时间：2018年 5月 1日 " + hour.ToString() + ":"
+                    + min.ToString() + ":00", font, Brushes.White, (float)0, (float)0);
+                min++;
+                
+                if (min == 60)
+                {
+                    hour++;
+                    min = 0;
+                }
+
+                totalMin++;//总时间增加
+
+            }
+
         }
     }
     public class Train
@@ -1724,5 +1778,5 @@ namespace 站场图Practice
         public int arrTime { get; set; }
         public int depTime { get; set; }
     }
-    
+
 }
