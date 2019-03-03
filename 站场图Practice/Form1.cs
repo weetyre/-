@@ -144,9 +144,9 @@ namespace 站场图Practice
 
             Font LineId = new Font("宋体", 8);
             NameThread();//生成线程
-            Namesnake();//确定各动画起始点
+            Namesnake();//确定各动画列车的起始点
             Train train1 = new Train() { arrTime = 123, depTime = 130, direction = 2, LineID = 3, trainID = "K21" };     
-            Assign(train1);//按照列车的方向与股道筛选动画并执行
+            Assign(train1);//按照列车的方向与股道筛选动画并执行 
         }
         public void SnP_3(object train)
         {
