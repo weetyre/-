@@ -66,15 +66,15 @@ namespace 站场图Practice
         DateTime dt;
 
         //总分钟变化
-        public int totalMin = 0;
+        public int totalSec = 0;
 
-
-
+        Train[] trains;
+        Train[] trainx;
+        int sec = 0;
 
 
         System.Windows.Forms.Timer trainTimer = new System.Windows.Forms.Timer();
         Point[] snake = new Point[12];
-        int second = 0;
 
         //信号灯位置点
         Point Xred = new Point(37, 240);
@@ -133,6 +133,7 @@ namespace 站场图Practice
         Thread xp = null;
         Thread sp = null;
         Thread timer = null;
+
         public Field()
         {
             this.WindowState = FormWindowState.Normal;//bug fix
@@ -155,8 +156,22 @@ namespace 站场图Practice
             Font LineId = new Font("宋体", 8);
             NameThread();//生成线程
             Namesnake();//确定各动画起始点
-            Train train1 = new Train() { arrTime = 123, depTime = 130, direction = 2, LineID = 3, trainID = "K21" };
-            Assign(train1);//按照列车的方向与股道筛选动画并执行
+            trains = new Train[6];
+            trainx = new Train[6];
+            trains[0] = new Train { arrTime = 60, depTime = 240, direction = 2, LineID = 3, trainID = "K21" };
+            trainx[0] = new Train { arrTime = 420, depTime = 660, direction = 1, LineID = 1, trainID = "K21" };
+            trains[1] = new Train { arrTime = 1080, depTime = 1140, direction = 2, LineID = 5, trainID = "K21" };
+            trainx[1] = new Train { arrTime = 1200, depTime = 1500, direction = 1, LineID = 8, trainID = "K21" };
+            trains[2] = new Train { arrTime = 3100, depTime = 3300, direction = 2, LineID = 4, trainID = "K21" };
+            trainx[2] = new Train { arrTime = 960, depTime = 1160, direction = 1, LineID = 6, trainID = "K21" };
+            trains[3] = new Train { arrTime = 1680, depTime = 1780, direction = 2, LineID = 3, trainID = "K21" };
+            trainx[3] = new Train { arrTime = 1700, depTime = 1850, direction = 1, LineID = 8, trainID = "K21" };
+            trains[4] = new Train { arrTime = 1700, depTime = 1900, direction = 2, LineID = 4, trainID = "K21" };
+            trainx[4] = new Train { arrTime = 2100, depTime = 2300, direction = 1, LineID = 1, trainID = "K21" };
+            trains[5] = new Train { arrTime = 2800, depTime = 2900, direction = 2, LineID = 3, trainID = "K21" };
+            trainx[5] = new Train { arrTime = 3500, depTime = 3600, direction = 1, LineID = 8, trainID = "K21" };
+
+            timer.Start();                     
         }
         public void SnP_3(object train)
         {
@@ -164,7 +179,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[1];
@@ -207,12 +222,13 @@ namespace 站场图Practice
                 DrawTrain(snake[1].X, snake[1].Y, Color.Red);
                 if (snake[1].X == 420)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
+                   
                     DrawGreenLight(S3Green);
                     TurnOff(S3red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[1];
                         DrawTrain(snake[1].X, snake[1].Y, Color.Red);
                         if (snake[1].X < 420)
@@ -222,6 +238,11 @@ namespace 站场图Practice
                         if (snake[1].X == 390)
                         {
                             snake[1].X = temp.X - 15;
+                        }
+                        if (snake[1].X == 375)
+                        {
+                            DrawRedLight(S3red);
+                            TurnOff(S3Green);
                         }
                         if ((snake[1].X < 390) || (snake[1].X > 195))
                         {
@@ -245,11 +266,11 @@ namespace 站场图Practice
                             snake[1].Y = temp.Y + 50;
 
                         }
-                        if (snake[1].X == 0)
+                        if (snake[1].X == -45)
                         {
                             break;
                         }
-
+                        DrawTrain(snake[1].X, snake[1].Y, Color.Red);
                     }
                 }
 
@@ -269,7 +290,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[3];
@@ -318,12 +339,12 @@ namespace 站场图Practice
                 DrawTrain(snake[3].X, snake[3].Y, Color.Red);
                 if (snake[3].X == 420)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S5Green);
                     TurnOff(S5red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[3];
                         DrawTrain(snake[3].X, snake[3].Y, Color.Red);
                         if (snake[3].X == 390)
@@ -365,7 +386,7 @@ namespace 站场图Practice
                             TurnOff(S5Green);
                             DrawRedLight(S5red);
                         }
-                        if (snake[3].X == 0)
+                        if (snake[3].X == -45)
                         {
                             break;
                         }
@@ -389,7 +410,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[4];
@@ -432,12 +453,12 @@ namespace 站场图Practice
                 DrawTrain(snake[4].X, snake[4].Y, Color.Red);
                 if (snake[4].X == 390)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S4Green);
                     TurnOff(S4red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[4];
                         DrawTrain(snake[4].X, snake[4].Y, Color.Red);
                         if (snake[4].X == 390)
@@ -469,7 +490,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[4].X == 0)
+                if (snake[4].X == -45)
                 {
                     DrawTrain(snake[4].X, snake[4].Y, Color.Red);
                     break;
@@ -484,7 +505,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[2];
@@ -536,12 +557,12 @@ namespace 站场图Practice
                 DrawTrain(snake[2].X, snake[2].Y, Color.Red);
                 if (snake[2].X == 420)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S6Green);
                     TurnOff(S6red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[2];
                         DrawTrain(snake[2].X, snake[2].Y, Color.Red);
                         if (snake[2].X == 420)
@@ -569,7 +590,7 @@ namespace 站场图Practice
                             TurnOff(S6Green);
                             DrawRedLight(S6red);
                         }
-                        if (snake[2].X == 0)
+                        if (snake[2].X == -45)
                         {
                             break;
                         }
@@ -595,7 +616,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[0];
@@ -653,12 +674,12 @@ namespace 站场图Practice
                 DrawTrain(snake[0].X, snake[0].Y, Color.Red);
                 if (snake[0].X == 420)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S8Green);
                     TurnOff(S8red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[0];
                         DrawTrain(snake[0].X, snake[0].Y, Color.Red);
                         if (snake[0].X == 420)
@@ -699,7 +720,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[0].X == 0)
+                if (snake[0].X == -45)
                 {
                     DrawTrain(snake[0].X, snake[0].Y, Color.Red);
                     break;
@@ -715,7 +736,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[5];
@@ -758,12 +779,12 @@ namespace 站场图Practice
                 DrawTrain(snake[5].X, snake[5].Y, Color.Red);
                 if (snake[5].X == 555)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X3Green);
                     TurnOff(X3red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[5];
                         DrawTrain(snake[5].X, snake[5].Y, Color.Red);
                         if (((snake[5].X > 555) || (snake[5].X == 555)) && (snake[5].X < 750))
@@ -810,7 +831,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[6];
@@ -858,12 +879,12 @@ namespace 站场图Practice
                 DrawTrain(snake[6].X, snake[6].Y, Color.Red);
                 if (snake[6].X == 555)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X5Green);
                     TurnOff(X5red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[6];
                         DrawTrain(snake[6].X, snake[6].Y, Color.Red);
                         if (((snake[6].X > 555) || (snake[6].X == 555)) && (snake[6].X < 750))
@@ -916,7 +937,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[7];
@@ -965,12 +986,12 @@ namespace 站场图Practice
                 DrawTrain(snake[7].X, snake[7].Y, Color.Red);
                 if (snake[7].X == 600)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X4Green);
                     TurnOff(X4red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[7];
                         DrawTrain(snake[7].X, snake[7].Y, Color.Red);
                         if (((snake[7].X > 600) || (snake[7].X == 600)) && (snake[7].X < 750))
@@ -1027,7 +1048,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[8];
@@ -1082,12 +1103,12 @@ namespace 站场图Practice
                 DrawTrain(snake[8].X, snake[8].Y, Color.Red);
                 if (snake[8].X == 540)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X6Green);
                     TurnOff(X6red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[8];
                         DrawTrain(snake[8].X, snake[8].Y, Color.Red);
                         if (snake[8].X == 630)
@@ -1149,7 +1170,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(50);
 
                 //程序主体
                 Point temp = snake[9];
@@ -1208,12 +1229,12 @@ namespace 站场图Practice
                 DrawTrain(snake[9].X, snake[9].Y, Color.Red);
                 if (snake[9].X == 510)
                 {
-                    Thread.Sleep(1000 * (((Train)train).depTime - ((Train)train).arrTime));
+                    Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X8Green);
                     TurnOff(X8red);
                     while (true)
                     {
-                        Thread.Sleep(300);
+                        Thread.Sleep(50);
                         temp = snake[9];
                         DrawTrain(snake[9].X, snake[9].Y, Color.Red);
                         if (snake[9].X == 600)
@@ -1281,7 +1302,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(25);
 
                 //程序主体
                 Point temp = snake[10];
@@ -1333,7 +1354,7 @@ namespace 站场图Practice
             while (true)
             {
                 //每隔0.3秒更新一次
-                Thread.Sleep(300);
+                Thread.Sleep(25);
 
                 //程序主体
                 Point temp = snake[11];
@@ -1602,21 +1623,7 @@ namespace 站场图Practice
 
         }
         public void Assign(object train)
-        {
-            //开始计时
-            timer.Start();
-            //更具具体的分钟，分配具体的车
-            /*
-             1. 整体放在while循环中，终止条件为 可调度车数为零
-             2. totalMin是当前的时间，从0开始，一直处于变化的过程中（每隔一秒添加1），最笨的方法，所有可调度车都写为if
-             条件判断，循环等待执行，然后每轮到一个车，就进入其循环，进行if跟进一步的逻辑判断，执行对应线程，执行一进入if
-             则下次执行的时候就不用执行
-             
-             
-             */
-
-
-
+        {          
             //direction:1为下行（向左） 2为上行（向右）
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 1))
             {
@@ -1747,27 +1754,47 @@ namespace 站场图Practice
 
 
             //循环，根据车辆总共数目走，等数目走完终止程序结束循环
-            while (totalMin!=1440)
+            while(totalSec!=86400)
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(17);
                 //先消除以前的时间
 
                 g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 200, 10));
 
                 g.DrawString("当前时间：2018年 5月 1日 " + hour.ToString() + ":"
                     + min.ToString() + ":00", font, Brushes.White, (float)0, (float)0);
-                min++;
-                
+                sec++;
+                if (sec == 60)
+                {
+                    min++;
+                    sec = 0;
+                }
                 if (min == 60)
                 {
                     hour++;
                     min = 0;
                 }
+                totalSec++;//总时间增加
+                if (totalSec < 86400)
+                {
+                    for(int i = 0; i < 6; i++)
+                    {
+                        if (trains[i].arrTime == totalSec)
+                        {
+                            Assign(trains[i]);
+                        }
+                        if (trainx[i].arrTime == totalSec)
+                        {
+                            Assign(trainx[i]);
+                        }
+                    }
+                       
+                   
 
-                totalMin++;//总时间增加
-
+                }
             }
-
+            
+           
         }
     }
     public class Train
