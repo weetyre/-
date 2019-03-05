@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -134,6 +135,11 @@ namespace 站场图Practice
         Thread sp = null;
         Thread timer = null;
 
+        //车辆的数目
+        public int NumOfTrains { get; set; }
+        private Train[] trainss;
+
+
         public Field()
         {
             this.WindowState = FormWindowState.Normal;//bug fix
@@ -156,6 +162,10 @@ namespace 站场图Practice
             Font LineId = new Font("宋体", 8);
             NameThread();//生成线程
             Namesnake();//确定各动画起始点
+
+            
+            NumOfTrains = ReadCsv(ref trainss);
+
             trains = new Train[6];
             trainx = new Train[6];
             trains[0] = new Train { arrTime = 60, depTime = 240, direction = 2, LineID = 3, trainID = "K21" };
@@ -1759,7 +1769,7 @@ namespace 站场图Practice
                 Thread.Sleep(17);
                 //先消除以前的时间
 
-                g.FillRectangle(Brushes.Black, new Rectangle(0, 0, 200, 10));
+                g.FillRectangle(Brushes.Black, new Rectangle(135, 0, 200, 10));
 
                 g.DrawString("当前时间：2018年 5月 1日 " + hour.ToString() + ":"
                     + min.ToString() + ":00", font, Brushes.White, (float)0, (float)0);
@@ -1795,6 +1805,60 @@ namespace 站场图Practice
             }
             
            
+        }
+        public int ReadCsv(ref Train[] train)
+        {
+            //打开文件流
+            FileStream fs = new FileStream("H:\\挑战杯\\龙门站场程序\\龙门站场程序\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
+            string str = "";
+            int num = 0;
+
+            //1.先统计行数
+
+
+            while (str != null)
+            {
+                str = sr.ReadLine();
+                num++;
+            }
+            num--;
+            //初始化车的个数
+            train = new Train[num];
+           
+
+            sr.Close();
+            FileStream fs2 = new FileStream("H:\\挑战杯\\龙门站场程序\\龙门站场程序\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
+
+            string str2 = "";
+            int i = 0;
+            while (str2 != null)
+            {
+
+                str2 = sr2.ReadLine();
+
+                if (str2 == null)
+                {
+                    break;
+                }
+
+                string[] trainText = new String[num];
+                trainText = str2.Split(',');
+
+                train[i] = new Train()
+                {
+                    arrTime = int.Parse(trainText[3]),
+                    depTime = int.Parse(trainText[4]),
+                    direction = int.Parse(trainText[2]),
+                    LineID = int.Parse(trainText[1]),
+                    trainID = trainText[0]
+                };
+                i++;
+
+            }
+            sr2.Close();
+            return num;
         }
     }
     public class Train
