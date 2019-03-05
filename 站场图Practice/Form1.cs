@@ -168,7 +168,7 @@ namespace 站场图Practice
             trainx[3] = new Train { arrTime = 1700, depTime = 1850, direction = 1, LineID = 8, trainID = "K21" };
             trains[4] = new Train { arrTime = 1700, depTime = 1900, direction = 2, LineID = 4, trainID = "K21" };
             trainx[4] = new Train { arrTime = 2100, depTime = 2300, direction = 1, LineID = 1, trainID = "K21" };
-            trains[5] = new Train { arrTime = 2800, depTime = 2900, direction = 2, LineID = 3, trainID = "K21" };
+            trains[5] = new Train { arrTime = 3900, depTime = 4100, direction = 2, LineID = 5, trainID = "K21" };
             trainx[5] = new Train { arrTime = 3500, depTime = 3600, direction = 1, LineID = 8, trainID = "K21" };
 
             timer.Start();                     
