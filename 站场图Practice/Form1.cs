@@ -166,38 +166,44 @@ namespace 站场图Practice
             NameThread();//生成线程
             Namesnake();//确定各动画起始点
 
-            
+
             NumOfTrains = ReadCsv(ref train);
 
-            trains = new Train[120];
-            trainx = new Train[120];
+            trains = new Train[NumOfTrains];
+            trainx = new Train[NumOfTrains];
 
-             nums = 0;
-             numx = 0;
+            nums = 0;
+            numx = 0;
 
             //根据direction划分为两个数组，用以实现动画
-            for(int i = 0; i < 180; i++)
+            for (int i = 0; i < NumOfTrains; i++)
             {
                 if (train[i].direction == 1)
                 {
-                    trainx[numx].direction = train[i].direction;
-                    trainx[numx].arrTime = train[i].arrTime;
-                    trainx[numx].depTime = train[i].depTime;
-                    trainx[numx].trainID = train[i].trainID;
-                    trainx[numx].LineID = train[i].LineID;
+                    trainx[numx] = new Train()
+                    {
+                        arrTime = train[i].arrTime,
+                        depTime = train[i].depTime,
+                        direction = train[i].direction,
+                        LineID = train[i].LineID,
+                        trainID = train[i].trainID
+                    };
                     numx++;
                 }
                 if (train[i].direction == 2)
                 {
-                    trains[nums].direction = train[i].direction;
-                    trains[nums].arrTime = train[i].arrTime;
-                    trains[nums].depTime = train[i].depTime;
-                    trains[nums].trainID = train[i].trainID;
-                    trains[nums].LineID = train[i].LineID;
+                    trains[nums] = new Train()
+                    {
+                        arrTime = train[i].arrTime,
+                        depTime = train[i].depTime,
+                        direction = train[i].direction,
+                        LineID = train[i].LineID,
+                        trainID = train[i].trainID
+                    };
                     nums++;
                 }
-            }           
-            timer.Start();                     
+            }
+            timer.Start();
         }
         public void SnP_3(object train)
         {
@@ -249,7 +255,7 @@ namespace 站场图Practice
                 if (snake[1].X == 420)
                 {
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
-                   
+
                     DrawGreenLight(S3Green);
                     TurnOff(S3red);
                     while (true)
@@ -1442,7 +1448,7 @@ namespace 站场图Practice
                 IntPtr oldpen = SelectObject(hdc, hpen);
 
                 MoveToEx(hdc, x, y, IntPtr.Zero);
-
+                
                 LineTo(hdc, x + 40, y);
 
                 SelectObject(hdc, oldpen);
@@ -1649,7 +1655,7 @@ namespace 站场图Practice
 
         }
         public void Assign(object train)
-        {          
+        {
             //direction:1为下行（向左） 2为上行（向右）
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 1))
             {
@@ -1772,15 +1778,14 @@ namespace 站场图Practice
         }
         public void ShowTime()
         {
-           
+
             Graphics g = back.CreateGraphics();
-            Font font = new Font("宋体", 8);      
+            Font font = new Font("宋体", 8);
             int hour = 0;
             int min = 0;
-
-
+            
             //循环，根据车辆总共数目走，等数目走完终止程序结束循环
-            while(totalSec!=86400)
+            while (totalSec != 86400)
             {
                 Thread.Sleep(17);
                 //先消除以前的时间
@@ -1790,6 +1795,7 @@ namespace 站场图Practice
                 g.DrawString("当前时间：2018年 5月 1日 " + hour.ToString() + ":"
                     + min.ToString() + ":00", font, Brushes.White, (float)0, (float)0);
                 sec++;
+
                 if (sec == 60)
                 {
                     min++;
@@ -1800,30 +1806,36 @@ namespace 站场图Practice
                     hour++;
                     min = 0;
                 }
+
                 totalSec++;//总时间增加
                 if (totalSec < 86400)
                 {
-                    for(int i = 0; i < 6; i++)
+
+
+                    for (int j = 0; j < nums; j++)
                     {
-                        if (trains[i].arrTime == totalSec)
+                        if (trains[j].arrTime == totalSec)
                         {
-                            Assign(trains[i]);
-                        }
-                        if (trainx[i].arrTime == totalSec)
-                        {
-                            Assign(trainx[i]);
+                            Assign(trains[j]);
                         }
                     }
-                       
-                   
+
+
+                    for (int l = 0; l < numx; l++)
+                    {
+                        if (trainx[l].arrTime == totalSec)
+                        {
+                            Assign(trainx[l]);
+                        }
+                    }
 
                 }
-            }                      
+            }
         }
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("C:\\Users\\Administrator\\Desktop\\龙门站自动接发车系统\\new\\Normal_train\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -1838,10 +1850,10 @@ namespace 站场图Practice
             num--;
             //初始化车的个数
             train = new Train[num];
-           
+
 
             sr.Close();
-            FileStream fs2 = new FileStream("C:\\Users\\Administrator\\Desktop\\龙门站自动接发车系统\\new\\Normal_train\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
