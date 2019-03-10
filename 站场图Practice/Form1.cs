@@ -134,10 +134,13 @@ namespace 站场图Practice
         Thread xp = null;
         Thread sp = null;
         Thread timer = null;
+        int nums;
+        int numx;
+
+        Train[] train;
 
         //车辆的数目
         public int NumOfTrains { get; set; }
-        private Train[] trainss;
 
 
         public Field()
@@ -164,23 +167,36 @@ namespace 站场图Practice
             Namesnake();//确定各动画起始点
 
             
-            NumOfTrains = ReadCsv(ref trainss);
+            NumOfTrains = ReadCsv(ref train);
 
-            trains = new Train[6];
-            trainx = new Train[6];
-            trains[0] = new Train { arrTime = 60, depTime = 240, direction = 2, LineID = 3, trainID = "K21" };
-            trainx[0] = new Train { arrTime = 420, depTime = 660, direction = 1, LineID = 1, trainID = "K21" };
-            trains[1] = new Train { arrTime = 1080, depTime = 1140, direction = 2, LineID = 5, trainID = "K21" };
-            trainx[1] = new Train { arrTime = 1200, depTime = 1500, direction = 1, LineID = 8, trainID = "K21" };
-            trains[2] = new Train { arrTime = 3100, depTime = 3300, direction = 2, LineID = 4, trainID = "K21" };
-            trainx[2] = new Train { arrTime = 960, depTime = 1160, direction = 1, LineID = 6, trainID = "K21" };
-            trains[3] = new Train { arrTime = 1680, depTime = 1780, direction = 2, LineID = 3, trainID = "K21" };
-            trainx[3] = new Train { arrTime = 1700, depTime = 1850, direction = 1, LineID = 8, trainID = "K21" };
-            trains[4] = new Train { arrTime = 1700, depTime = 1900, direction = 2, LineID = 4, trainID = "K21" };
-            trainx[4] = new Train { arrTime = 2100, depTime = 2300, direction = 1, LineID = 1, trainID = "K21" };
-            trains[5] = new Train { arrTime = 3900, depTime = 4100, direction = 2, LineID = 5, trainID = "K21" };
-            trainx[5] = new Train { arrTime = 3500, depTime = 3600, direction = 1, LineID = 8, trainID = "K21" };
+            trains = new Train[120];
+            trainx = new Train[120];
 
+             nums = 0;
+             numx = 0;
+
+            //根据direction划分为两个数组，用以实现动画
+            for(int i = 0; i < 180; i++)
+            {
+                if (train[i].direction == 1)
+                {
+                    trainx[numx].direction = train[i].direction;
+                    trainx[numx].arrTime = train[i].arrTime;
+                    trainx[numx].depTime = train[i].depTime;
+                    trainx[numx].trainID = train[i].trainID;
+                    trainx[numx].LineID = train[i].LineID;
+                    numx++;
+                }
+                if (train[i].direction == 2)
+                {
+                    trains[nums].direction = train[i].direction;
+                    trains[nums].arrTime = train[i].arrTime;
+                    trains[nums].depTime = train[i].depTime;
+                    trains[nums].trainID = train[i].trainID;
+                    trains[nums].LineID = train[i].LineID;
+                    nums++;
+                }
+            }           
             timer.Start();                     
         }
         public void SnP_3(object train)
@@ -1802,20 +1818,17 @@ namespace 站场图Practice
                    
 
                 }
-            }
-            
-           
+            }                      
         }
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("H:\\挑战杯\\龙门站场程序\\龙门站场程序\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("C:\\Users\\Administrator\\Desktop\\龙门站自动接发车系统\\new\\Normal_train\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
 
             //1.先统计行数
-
 
             while (str != null)
             {
@@ -1828,7 +1841,7 @@ namespace 站场图Practice
            
 
             sr.Close();
-            FileStream fs2 = new FileStream("H:\\挑战杯\\龙门站场程序\\龙门站场程序\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("C:\\Users\\Administrator\\Desktop\\龙门站自动接发车系统\\new\\Normal_train\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
@@ -1855,7 +1868,6 @@ namespace 站场图Practice
                     trainID = trainText[0]
                 };
                 i++;
-
             }
             sr2.Close();
             return num;
