@@ -67,12 +67,13 @@ namespace 站场图Practice
         DateTime dt;
 
         //总分钟变化
-        public int totalSec = 0;
+        public int totalSec = 32400;
 
         Train[] trains;
         Train[] trainx;
         int sec = 0;
 
+      
 
         System.Windows.Forms.Timer trainTimer = new System.Windows.Forms.Timer();
         Point[] snake = new Point[12];
@@ -139,6 +140,8 @@ namespace 站场图Practice
 
         Train[] train;
 
+        Button change;
+
         //车辆的数目
         public int NumOfTrains { get; set; }
 
@@ -166,6 +169,13 @@ namespace 站场图Practice
             NameThread();//生成线程
             Namesnake();//确定各动画起始点
 
+            //时刻图切换按钮
+            change = new Button();
+            change.Size = new Size(200, 100);
+            change.Location = new Point(1050, 200);
+            change.Text = "切换时刻图";
+            change.Click += change_Click;//委托生成时刻图
+            this.Controls.Add(change);
 
             NumOfTrains = ReadCsv(ref train);
 
@@ -174,6 +184,7 @@ namespace 站场图Practice
 
             nums = 0;
             numx = 0;
+            
 
             //根据direction划分为两个数组，用以实现动画
             for (int i = 0; i < NumOfTrains; i++)
@@ -204,6 +215,10 @@ namespace 站场图Practice
                 }
             }
             timer.Start();
+        }
+        public void change_Click(object sender, EventArgs e)
+        {
+            TimeTabel Ft = new TimeTabel();
         }
         public void SnP_3(object train)
         {
@@ -847,7 +862,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[5].X == 0)
+                if (snake[5].X == 1200)
                 {
                     DrawTrain(snake[5].X, snake[5].Y, Color.Red);
                     break;
@@ -953,7 +968,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[6].X == 0)
+                if (snake[6].X == 1200)
                 {
                     DrawTrain(snake[6].X, snake[6].Y, Color.Red);
                     break;
@@ -1064,7 +1079,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[7].X == 0)
+                if (snake[7].X == 1200)
                 {
                     DrawTrain(snake[7].X, snake[7].Y, Color.Red);
                     break;
@@ -1186,7 +1201,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[8].X == 0)
+                if (snake[8].X == 1200)
                 {
                     DrawTrain(snake[8].X, snake[8].Y, Color.Red);
                     break;
@@ -1318,7 +1333,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[9].X == 0)
+                if (snake[9].X == 1200)
                 {
                     DrawTrain(snake[9].X, snake[9].Y, Color.Red);
                     break;
@@ -1885,6 +1900,331 @@ namespace 站场图Practice
             return num;
         }
     }
+    public class TimeTabel : Form  //时刻表的代码
+    {
+        Graphics g;
+        Font f;
+        Font cc;
+        int m;
+        int p;
+        int t;
+        int n;
+        Train[] train;
+        public TimeTabel()
+        {
+            this.Size = new Size(1500, 700);
+            Panel a = new Panel();
+            a.Size = new Size(1500, 700);
+            int NumOfTrains = ReadCsv(ref train);
+            a.Paint += new PaintEventHandler(panel_Paint);
+            this.Controls.Add(a);
+        }
+        public void panel_Paint(object sender, PaintEventArgs e)
+        {
+            Panel _Panel = (Panel)sender;
+            g = Graphics.FromHwnd(_Panel.Handle);
+            f = new Font("宋体", 11);
+            cc = new Font("宋体", 5);
+            for (int i = 0; i < 180; i++)
+            {
+                DrawOperationLines(train[i]);
+            }
+            //纵线
+            for (int i = 0; i <= 8; i++)
+            {
+                g.DrawLine(new Pen(Color.Green, 3), 60 + 144 * i, 35, 60 + 144 * i, 210);
+                g.DrawLine(new Pen(Color.Green, 3), 60 + 144 * i, 240, 60 + 144 * i, 415);
+                g.DrawLine(new Pen(Color.Green, 3), 60 + 144 * i, 445, 60 + 144 * i, 620);
+            }
+
+            //时刻数
+            for (int i = 0; i <= 7; i++)
+            {
+                m = 6 + i;
+                n = 14 + i;
+                t = 22 + i;
+                p = i - 2;
+                g.DrawString(m.ToString(), f, Brushes.Black, 50 + 144 * i, 15);
+                g.DrawString(n.ToString(), f, Brushes.Black, 50 + 144 * i, 220);
+                if (i < 2)
+                {
+                    g.DrawString(t.ToString(), f, Brushes.Black, 50 + 144 * i, 425);
+                }
+                if ((i > 2) || (i == 2))
+                {
+                    g.DrawString(p.ToString(), f, Brushes.Black, 50 + 144 * i, 425);
+                }
+            }
+            g.DrawString("14", f, Brushes.Black, 1193, 15);
+            g.DrawString("22", f, Brushes.Black, 1193, 220);
+            g.DrawString("6", f, Brushes.Black, 1193, 425);
+            for (int i = 1; i <= 96; i++)
+            {
+                g.DrawLine(new Pen(Color.Green), 60 + 12 * i, 35, 60 + 12 * i, 210);
+                g.DrawLine(new Pen(Color.Green), 60 + 12 * i, 240, 60 + 12 * i, 415);
+                g.DrawLine(new Pen(Color.Green), 60 + 12 * i, 445, 60 + 12 * i, 620);
+            }
+            g.DrawLine(new Pen(Color.Green, 3), 20, 5, 20, 650);
+            g.DrawLine(new Pen(Color.Green, 3), 1212, 5, 1212, 650);
+
+            //大横线
+            g.DrawLine(new Pen(Color.Green, 3), 20, 35, 1212, 35);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 210, 1212, 210);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 240, 1212, 240);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 415, 1212, 415);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 445, 1212, 445);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 620, 1212, 620);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 5, 1212, 5);
+            g.DrawLine(new Pen(Color.Green, 3), 20, 650, 1212, 650);
+
+            //小横线
+            for (int i = 1; i <= 6; i++)
+            {
+                g.DrawLine(new Pen(Color.Green), 20, 35 + 25 * i, 1212, 35 + 25 * i);
+                g.DrawLine(new Pen(Color.Green), 20, 240 + 25 * i, 1212, 240 + 25 * i);
+                g.DrawLine(new Pen(Color.Green), 20, 445 + 25 * i, 1212, 445 + 25 * i);
+            }
+            g.DrawString("8", f, Brushes.Black, 35, 40);
+            g.DrawString("8", f, Brushes.Black, 35, 245);
+            g.DrawString("8", f, Brushes.Black, 35, 450);
+
+            g.DrawString("6", f, Brushes.Black, 35, 65);
+            g.DrawString("6", f, Brushes.Black, 35, 270);
+            g.DrawString("6", f, Brushes.Black, 35, 475);
+
+            g.DrawString("4", f, Brushes.Black, 35, 90);
+            g.DrawString("4", f, Brushes.Black, 35, 295);
+            g.DrawString("4", f, Brushes.Black, 35, 500);
+
+            g.DrawString("Ⅱ", f, Brushes.Black, 30, 115);
+            g.DrawString("Ⅱ", f, Brushes.Black, 30, 320);
+            g.DrawString("Ⅱ", f, Brushes.Black, 30, 525);
+
+            g.DrawString("Ⅰ", f, Brushes.Black, 30, 140);
+            g.DrawString("Ⅰ", f, Brushes.Black, 30, 345);
+            g.DrawString("Ⅰ", f, Brushes.Black, 30, 550);
+
+            g.DrawString("3", f, Brushes.Black, 35, 165);
+            g.DrawString("3", f, Brushes.Black, 35, 370);
+            g.DrawString("3", f, Brushes.Black, 35, 575);
+
+            g.DrawString("5", f, Brushes.Black, 35, 190);
+            g.DrawString("5", f, Brushes.Black, 35, 395);
+            g.DrawString("5", f, Brushes.Black, 35, 600);
+
+        }
+        public void DrawOperationLines(object train)
+        {
+            if ((((Train)train).arrTime < 50400) & (((Train)train).arrTime > 21600))
+            {
+                if ((((Train)train)).LineID == 8)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 47, 60 + (float)(0.04 * (((Train)train).depTime - 21600)), 47);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 37);
+                }
+                if ((((Train)train)).LineID == 6)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 72, 60 + (float)(0.04 * (((Train)train).depTime - 21600)), 72);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train)).arrTime - 21600), 62);
+                }
+                if ((((Train)train)).LineID == 4)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 97, 60 + (float)(0.04 * (((Train)train).depTime - 21600)), 97);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 87);
+                }
+                if ((((Train)train)).LineID == 2)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 110, 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 135);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).arrTime - 21600)), 120);
+                }
+                if ((((Train)train)).LineID == 1)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 135, 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 160);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).arrTime - 21600)), 145);
+                }
+                if ((((Train)train)).LineID == 3)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 172, 60 + (float)(0.04 * (((Train)train).depTime - 21600)), 172);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 162);
+                }
+                if ((((Train)train)).LineID == 5)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 197, 60 + (float)(0.04 * (((Train)train).depTime - 21600)), 197);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 21600)), 187);
+                }
+            }
+
+            if ((((Train)train).arrTime > 50400) & (((Train)train).arrTime < 79200))
+            {
+                if ((((Train)train)).LineID == 8)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 252, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 252);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 242);
+                }
+                if ((((Train)train)).LineID == 6)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 277, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 277);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 267);
+                }
+                if ((((Train)train)).LineID == 4)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 302, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 302);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 292);
+                }
+                if ((((Train)train)).LineID == 2)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 315, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 340);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).depTime - 50400)), 325);
+                }
+                if ((((Train)train)).LineID == 1)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 340, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 365);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).depTime - 50400)), 350);
+                }
+                if ((((Train)train)).LineID == 3)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 377, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 377);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 367);
+                }
+                if ((((Train)train)).LineID == 5)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 402, 60 + (float)(0.04 * (((Train)train).depTime - 50400)), 402);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 50400)), 392);
+                }
+            }
+            if ((((Train)train).arrTime < 86400) & (((Train)train).arrTime > 79200))
+            {
+                if ((((Train)train)).LineID == 8)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 460, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 460);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 450);
+                }
+                if ((((Train)train)).LineID == 6)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 485, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 485);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 475);
+                }
+                if ((((Train)train)).LineID == 4)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 510, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 510);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 500);
+                }
+                if ((((Train)train)).LineID == 2)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 520, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 545);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).depTime - 79200)), 530);
+                }
+                if ((((Train)train)).LineID == 1)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 545, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 570);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).depTime - 79200)), 555);
+                }
+                if ((((Train)train)).LineID == 3)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 585, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 585);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 575);
+                }
+                if ((((Train)train)).LineID == 5)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 610, 60 + (float)(0.04 * (((Train)train).depTime - 79200)), 610);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 500);
+                }
+            }
+
+            if ((((Train)train).arrTime < 21600))
+            {
+                if ((((Train)train)).LineID == 8)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 460, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 460);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 450);
+                }
+                if ((((Train)train)).LineID == 6)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 485, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 485);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime - 79200)), 475);
+                }
+                if ((((Train)train)).LineID == 4)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 510, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 510);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 500);
+                }
+                if ((((Train)train)).LineID == 2)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 520, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 545);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).depTime + 7200)), 530);
+                }
+                if ((((Train)train)).LineID == 1)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 545, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 570);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 61 + (float)(0.04 * (((Train)train).depTime + 7200)), 555);
+                }
+                if ((((Train)train)).LineID == 3)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 585, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 585);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 575);
+                }
+                if ((((Train)train)).LineID == 5)
+                {
+                    g.DrawLine(new Pen(Color.Red), 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 610, 60 + (float)(0.04 * (((Train)train).depTime + 7200)), 610);
+                    g.DrawString(((Train)train).trainID, cc, Brushes.Red, 60 + (float)(0.04 * (((Train)train).arrTime + 7200)), 500);
+                }
+            }
+        }
+        public int ReadCsv(ref Train[] train)
+        {
+            //打开文件流
+            FileStream fs = new FileStream("C:\\Users\\Administrator\\Desktop\\龙门站自动接发车系统\\new\\Normal_train\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
+            string str = "";
+            int num = 0;
+
+            //1.先统计行数
+
+
+            while (str != null)
+            {
+                str = sr.ReadLine();
+                num++;
+            }
+            num--;
+            //初始化车的个数
+            train = new Train[num];
+
+
+            sr.Close();
+            FileStream fs2 = new FileStream(@"C:\Users\Administrator\Desktop\龙门站自动接发车系统\new\Normal_train\站场图Practice\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
+
+            string str2 = "";
+            int i = 0;
+            while (str2 != null)
+            {
+
+                str2 = sr2.ReadLine();
+
+                if (str2 == null)
+                {
+                    break;
+                }
+
+                string[] trainText = new String[num];
+                trainText = str2.Split(',');
+
+                train[i] = new Train()
+                {
+                    arrTime = int.Parse(trainText[3]),
+                    depTime = int.Parse(trainText[4]),
+                    direction = int.Parse(trainText[2]),
+                    LineID = int.Parse(trainText[1]),
+                    trainID = trainText[0]
+                };
+                i++;
+            }
+            sr2.Close();
+            return num;
+        }
+    }
+
     public class Train
     {
         public string trainID { get; set; }
