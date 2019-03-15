@@ -141,6 +141,7 @@ namespace 站场图Practice
         Train[] train;
 
         Button change;
+        Label headline;
 
         //车辆的数目
         public int NumOfTrains { get; set; }
@@ -163,9 +164,18 @@ namespace 站场图Practice
             change.Location = new Point(1050, 600);
             change.Text = "切换时刻图";
             change.Click += change_Click;//委托生成时刻图
-            change.BackColor = Color.White;
+            change.BackColor = Color.White;            
             back.Controls.Add(change);
             back.Visible = true;
+
+            headline = new Label();
+            headline.Size = new Size(300, 40);
+            headline.Location = new Point(500, 40);
+            headline.Text = "高速铁路车站站场图";
+            headline.ForeColor = Color.White;
+            headline.Font = new Font("宋体", 17);
+            back.Controls.Add(headline);
+
 
             this.Show();
             DrawLine();
@@ -1571,11 +1581,12 @@ namespace 站场图Practice
             g.DrawString("28", font, Brushes.White, (float)695, (float)190);
             g.DrawString("30", font, Brushes.White, (float)670, (float)160);
 
-            g.DrawString("郑西高铁上行", font, Brushes.Orange, (float)100, (float)370);
+
+            g.DrawString("上行方向", font, Brushes.Orange, (float)100, (float)370);
             g.DrawLine(new Pen(Color.Orange), 100, 360, 170, 360);
             g.DrawLine(new Pen(Color.Orange), 100, 360, 110, 370);
 
-            g.DrawString("郑西高铁下行", font, Brushes.Orange, (float)1150, (float)210);
+            g.DrawString("下行方向", font, Brushes.Orange, (float)1150, (float)210);
             g.DrawLine(new Pen(Color.Orange), 1150, 230, 1220, 230);
             g.DrawLine(new Pen(Color.Orange), 1220, 230, 1210, 220);
             //信号灯及其编号
@@ -1913,6 +1924,7 @@ namespace 站场图Practice
         int t;
         int n;
         Train[] train;
+        
         public TimeTabel()
         {
             this.Size = new Size(1500, 700);
@@ -2242,7 +2254,7 @@ namespace 站场图Practice
         TextBox password;
         Label password_label;
         Label id_label;
-
+        Label version;
 
 
         public Login()
@@ -2279,13 +2291,19 @@ namespace 站场图Practice
             password_label.ForeColor = Color.White;
             password_label.Text = "密码";
 
-
+            version = new Label();
+            version.Size = new Size(100, 20);
+            version.Location = new Point(830, 600);
+            version.BackColor = Color.Transparent;
+            version.ForeColor = Color.Blue;
+            version.Text = "Version:1.0.0";
 
             this.Controls.Add(login);
             this.Controls.Add(password);
             this.Controls.Add(id);
             this.Controls.Add(id_label);
             this.Controls.Add(password_label);
+            this.Controls.Add(version);
 
             
         }
