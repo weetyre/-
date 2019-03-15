@@ -16,7 +16,7 @@ namespace 站场图Practice
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Field());
+            Application.Run(new Login());
         }
     }
 }

@@ -151,16 +151,22 @@ namespace 站场图Practice
             this.WindowState = FormWindowState.Normal;//bug fix
 
             this.Size = new Size(1300, 750);
-            this.BackColor = Color.Black;
+            //this.BackColor = Color.Black;
             back.Size = new Size(1300, 750);
             back.BackColor = Color.Black;
-            front.Size = new Size(1300, 750);
-            front.BackColor = Color.Transparent;
             this.Controls.Add(back);
             this.back.SendToBack();
             this.front.BringToFront();
+
+            change = new Button();
+            change.Size = new Size(100, 50);
+            change.Location = new Point(1050, 600);
+            change.Text = "切换时刻图";
+            change.Click += change_Click;//委托生成时刻图
+            change.BackColor = Color.White;
+            back.Controls.Add(change);
             back.Visible = true;
-            front.Visible = true;
+
             this.Show();
             DrawLine();
             trainTimer.Interval = 300;
@@ -170,12 +176,8 @@ namespace 站场图Practice
             Namesnake();//确定各动画起始点
 
             //时刻图切换按钮
-            change = new Button();
-            change.Size = new Size(200, 100);
-            change.Location = new Point(1050, 200);
-            change.Text = "切换时刻图";
-            change.Click += change_Click;//委托生成时刻图
-            this.Controls.Add(change);
+
+ 
 
             NumOfTrains = ReadCsv(ref train);
 
@@ -219,6 +221,7 @@ namespace 站场图Practice
         public void change_Click(object sender, EventArgs e)
         {
             TimeTabel Ft = new TimeTabel();
+            Ft.Show();
         }
         public void SnP_3(object train)
         {
@@ -2173,7 +2176,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("C:\\Users\\Administrator\\Desktop\\龙门站自动接发车系统\\new\\Normal_train\\站场图Practice\\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -2192,7 +2195,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream(@"C:\Users\Administrator\Desktop\龙门站自动接发车系统\new\Normal_train\站场图Practice\traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
@@ -2224,7 +2227,6 @@ namespace 站场图Practice
             return num;
         }
     }
-
     public class Train
     {
         public string trainID { get; set; }
@@ -2233,5 +2235,65 @@ namespace 站场图Practice
         public int arrTime { get; set; }
         public int depTime { get; set; }
     }
+    public class Login : Form
+    {
+        Button login;
+        TextBox id;
+        TextBox password;
+        Label password_label;
+        Label id_label;
 
+
+
+        public Login()
+        {
+            this.Size = new Size(950, 650);
+            this.BackgroundImage = Image.FromFile(System.IO.Path.GetFullPath("44.jpg"));
+
+
+            login = new Button();
+            login.Size = new Size(80, 20);
+            login.Text = "登录";
+            login.Location = new Point(600, 565);
+            login.Click += login_Click;
+
+            id = new TextBox();
+            id.Size = new Size(80, 20);
+            id.Location = new Point(490, 550);
+
+            password = new TextBox();
+            password.Size = new Size(80, 20);
+            password.Location = new Point(490, 580);
+
+            id_label = new Label();
+            id_label.Size = new Size(30, 20);
+            id_label.Location = new Point(420, 555);
+            id_label.BackColor = Color.Transparent;
+            id_label.ForeColor = Color.White;
+            id_label.Text = "账号";
+
+            password_label = new Label();
+            password_label.Size = new Size(30, 20);
+            password_label.Location = new Point(420, 585);
+            password_label.BackColor = Color.Transparent;
+            password_label.ForeColor = Color.White;
+            password_label.Text = "密码";
+
+
+
+            this.Controls.Add(login);
+            this.Controls.Add(password);
+            this.Controls.Add(id);
+            this.Controls.Add(id_label);
+            this.Controls.Add(password_label);
+
+            
+        }
+        public void login_Click(object sender, EventArgs e)
+        {
+            Field Ft = new Field();
+            Ft.Show();
+        }
+
+    }
 }
