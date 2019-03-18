@@ -886,7 +886,6 @@ namespace 站场图Practice
         }
         public void Xnp_5(object train)
         {
-
             //主循环，控制动画
             while (true)
             {
@@ -967,7 +966,7 @@ namespace 站场图Practice
                             snake[6].X = temp.X + 15;
                         }
                         DrawTrain(snake[6].X, snake[6].Y, Color.Red);
-                        if ((snake[6].X == 415) || (snake[6].X < 415))
+                        if (snake[6].X == 570)
                         {
                             TurnOff(X5Green);
                             DrawRedLight(X5red);
@@ -1696,6 +1695,7 @@ namespace 站场图Practice
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 5))
             {
+                xnp_5 = new Thread(Xnp_5);
                 xnp_5.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 4))
@@ -1708,6 +1708,7 @@ namespace 站场图Practice
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 8))
             {
+                xnp_8 = new Thread(Xnp_8);
                 xnp_8.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 2))
@@ -1742,7 +1743,6 @@ namespace 站场图Practice
             snake[0].X = 1050;
             snake[0].Y = 300;
 
-            trainTimer.Start();
 
             //Snp_3
             snake[1].X = 1050;
@@ -1864,7 +1864,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -1882,7 +1882,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
@@ -2188,7 +2188,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -2207,7 +2207,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
