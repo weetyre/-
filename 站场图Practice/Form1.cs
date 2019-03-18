@@ -67,7 +67,7 @@ namespace 站场图Practice
         DateTime dt;
 
         //总分钟变化
-        public int totalSec = 32400;
+        public int totalSec = 0;
 
         Train[] trains;
         Train[] trainx;
@@ -235,6 +235,9 @@ namespace 站场图Practice
         }
         public void SnP_3(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -342,6 +345,8 @@ namespace 站场图Practice
                 }
 
             }
+
+            g.FillRectangle(Brushes.White, new Rectangle(70, 60, 140, 75));
 
         }
         public void SnP_5(object train)
@@ -670,7 +675,9 @@ namespace 站场图Practice
         }
         public void SnP_8(object train)
         {
-
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -787,7 +794,7 @@ namespace 站场图Practice
                 }
 
             }
-
+            g.FillRectangle(Brushes.White, new Rectangle(70, 60, 140, 75));
         }
         public void Xnp_3(object train)
         {
@@ -1224,7 +1231,10 @@ namespace 站场图Practice
         }
         public void Xnp_8(object train)
         {
-
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 120, 20));
             //主循环，控制动画
             while (true)
             {
@@ -1353,6 +1363,7 @@ namespace 站场图Practice
 
             }
 
+           
         }
         public void Xp(object train)
         {
@@ -1486,7 +1497,7 @@ namespace 站场图Practice
             }
             catch (Exception e)
             {
-                snp_3.Abort();
+                //snp_3.Abort();
             }
 
 
@@ -1687,10 +1698,12 @@ namespace 站场图Practice
             //direction:1为下行（向左） 2为上行（向右）
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 1))
             {
+                xp = new Thread(Xp);
                 xp.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 3))
             {
+                xnp_3 = new Thread(Xnp_3);
                 xnp_3.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 5))
@@ -1700,10 +1713,12 @@ namespace 站场图Practice
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 4))
             {
+                xnp_4 = new Thread(Xnp_4);
                 xnp_4.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 6))
             {
+                xnp_6 = new Thread(Xnp_6);
                 xnp_6.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 8))
@@ -1713,26 +1728,32 @@ namespace 站场图Practice
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 2))
             {
+                sp = new Thread(Sp);
                 sp.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 3))
             {
+                snp_3 = new Thread(SnP_3);
                 snp_3.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 4))
             {
+                snp_4 = new Thread(SnP_4);
                 snp_4.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 5))
             {
+                snp_5 = new Thread(SnP_5);
                 snp_5.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 6))
             {
+                snp_6 = new Thread(SnP_6);
                 snp_6.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 8))
             {
+                snp_8 = new Thread(SnP_8);
                 snp_8.Start(train);
             }
 
@@ -1791,18 +1812,18 @@ namespace 站场图Practice
         }
         public void NameThread()
         {
-            snp_3 = new Thread(SnP_3);
-            snp_5 = new Thread(SnP_5);
-            snp_8 = new Thread(SnP_8);
-            snp_6 = new Thread(SnP_6);
-            snp_4 = new Thread(SnP_4);
-            xnp_3 = new Thread(Xnp_3);
-            xnp_5 = new Thread(Xnp_5);
-            xnp_4 = new Thread(Xnp_4);
-            xnp_6 = new Thread(Xnp_6);
-            xnp_8 = new Thread(Xnp_8);
-            xp = new Thread(Xp);
-            sp = new Thread(Sp);
+//             snp_3 = new Thread(SnP_3);
+//             snp_5 = new Thread(SnP_5);
+//             snp_8 = new Thread(SnP_8);
+//             snp_6 = new Thread(SnP_6);
+//             snp_4 = new Thread(SnP_4);
+//             xnp_3 = new Thread(Xnp_3);
+//             xnp_5 = new Thread(Xnp_5);
+//             xnp_4 = new Thread(Xnp_4);
+//             xnp_6 = new Thread(Xnp_6);
+//             xnp_8 = new Thread(Xnp_8);
+//             xp = new Thread(Xp);
+//             sp = new Thread(Sp);
             timer = new Thread(ShowTime);
         }
         public void ShowTime()
@@ -1864,7 +1885,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -1882,7 +1903,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
@@ -1924,13 +1945,15 @@ namespace 站场图Practice
         int t;
         int n;
         Train[] train;
-        
+        int NumOfTrains;
+
+
         public TimeTabel()
         {
             this.Size = new Size(1500, 700);
             Panel a = new Panel();
             a.Size = new Size(1500, 700);
-            int NumOfTrains = ReadCsv(ref train);
+            NumOfTrains = ReadCsv(ref train);
             a.Paint += new PaintEventHandler(panel_Paint);
             this.Controls.Add(a);
         }
@@ -1940,7 +1963,7 @@ namespace 站场图Practice
             g = Graphics.FromHwnd(_Panel.Handle);
             f = new Font("宋体", 11);
             cc = new Font("宋体", 5);
-            for (int i = 0; i < 180; i++)
+            for (int i = 0; i < NumOfTrains; i++)
             {
                 DrawOperationLines(train[i]);
             }
@@ -2188,7 +2211,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -2207,7 +2230,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
