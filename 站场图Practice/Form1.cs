@@ -67,7 +67,7 @@ namespace 站场图Practice
         DateTime dt;
 
         //总分钟变化
-        public int totalSec = 0;
+        public int totalSec = 32400;
 
         Train[] trains;
         Train[] trainx;
@@ -338,7 +338,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[1].X == 0)
+                if (snake[1].X == -45)
                 {
                     DrawTrain(snake[1].X, snake[1].Y, Color.Red);
                     break;
@@ -351,6 +351,9 @@ namespace 站场图Practice
         }
         public void SnP_5(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -460,7 +463,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[3].X == 0)
+                if (snake[3].X == -45)
                 {
                     DrawTrain(snake[3].X, snake[3].Y, Color.Red);
                     break;
@@ -471,6 +474,9 @@ namespace 站场图Practice
         }
         public void SnP_4(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -546,7 +552,7 @@ namespace 站场图Practice
                             TurnOff(S4Green);
                             DrawRedLight(S4red);
                         }
-                        if (snake[4].X == 0)
+                        if (snake[4].X == -45)
                         {
                             break;
                         }
@@ -566,6 +572,9 @@ namespace 站场图Practice
         }
         public void SnP_6(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -664,7 +673,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[2].X == 0)
+                if (snake[2].X == -45)
                 {
                     DrawTrain(snake[2].X, snake[2].Y, Color.Red);
                     break;
@@ -675,9 +684,10 @@ namespace 站场图Practice
         }
         public void SnP_8(object train)
         {
+
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.DrawString("当前车次： " + ((Train)train).trainID+";"+"开放股道："+ ((Train)train).LineID+";" + "停车时间："+ ((float)(((Train)train).depTime- ((Train)train).arrTime)/60)+"分钟", font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -778,7 +788,7 @@ namespace 站场图Practice
                             TurnOff(S8Green);
                             DrawRedLight(S8red);
                         }
-                        if (snake[0].X == 0)
+                        if (snake[0].X == -45)
                         {
                             break;
                         }
@@ -798,7 +808,9 @@ namespace 站场图Practice
         }
         public void Xnp_3(object train)
         {
-
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -873,7 +885,7 @@ namespace 站场图Practice
                             TurnOff(X3Green);
                             DrawRedLight(X3red);
                         }
-                        if (snake[5].X == 0)
+                        if (snake[5].X == 1200)
                         {
                             break;
                         }
@@ -893,6 +905,9 @@ namespace 站场图Practice
         }
         public void Xnp_5(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -978,7 +993,7 @@ namespace 站场图Practice
                             TurnOff(X5Green);
                             DrawRedLight(X5red);
                         }
-                        if (snake[6].X == 0)
+                        if (snake[6].X == 1200)
                         {
                             break;
                         }
@@ -998,6 +1013,9 @@ namespace 站场图Practice
         }
         public void Xnp_4(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -1089,7 +1107,7 @@ namespace 站场图Practice
                             TurnOff(X4Green);
                             DrawRedLight(X4red);
                         }
-                        if (snake[7].X == 0)
+                        if (snake[7].X == 1200)
                         {
                             break;
                         }
@@ -1109,6 +1127,9 @@ namespace 站场图Practice
         }
         public void Xnp_6(object train)
         {
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -1211,7 +1232,7 @@ namespace 站场图Practice
                             TurnOff(X6Green);
                             DrawRedLight(X6red);
                         }
-                        if (snake[8].X == 0)
+                        if (snake[8].X == 1200)
                         {
                             break;
                         }
@@ -1231,6 +1252,7 @@ namespace 站场图Practice
         }
         public void Xnp_8(object train)
         {
+
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
@@ -1346,7 +1368,7 @@ namespace 站场图Practice
                             TurnOff(X8Green);
                             DrawRedLight(X8red);
                         }
-                        if (snake[9].X == 0)
+                        if (snake[9].X == 1200)
                         {
                             break;
                         }
@@ -1367,7 +1389,9 @@ namespace 站场图Practice
         }
         public void Xp(object train)
         {
-
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -1419,7 +1443,9 @@ namespace 站场图Practice
         }
         public void Sp(object train)
         {
-
+            Graphics g = back.CreateGraphics();
+            Font font = new Font("宋体", 10);
+            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -1460,7 +1486,7 @@ namespace 站场图Practice
 
 
                 //再退一次
-                if (snake[11].X == 0)
+                if (snake[11].X == -45)
                 {
                     DrawTrain(snake[11].X, snake[11].Y, Color.Red);
                     break;
@@ -1699,61 +1725,85 @@ namespace 站场图Practice
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 1))
             {
                 xp = new Thread(Xp);
+                snake[10].X = -45;
+                snake[10].Y = 250;
                 xp.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 3))
             {
                 xnp_3 = new Thread(Xnp_3);
+                snake[5].X = -45;
+                snake[5].Y = 250;
                 xnp_3.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 5))
             {
                 xnp_5 = new Thread(Xnp_5);
+                snake[6].X = -45;
+                snake[6].Y = 250;
                 xnp_5.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 4))
             {
                 xnp_4 = new Thread(Xnp_4);
+                snake[7].X = -45;
+                snake[7].Y = 250;
                 xnp_4.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 6))
             {
                 xnp_6 = new Thread(Xnp_6);
+                snake[8].X = -45;
+                snake[8].Y = 250;
                 xnp_6.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 8))
             {
                 xnp_8 = new Thread(Xnp_8);
+                snake[9].X = -45;
+                snake[9].Y = 250;
                 xnp_8.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 2))
             {
                 sp = new Thread(Sp);
+                snake[11].X = 1245;
+                snake[11].Y = 300;
                 sp.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 3))
             {
                 snp_3 = new Thread(SnP_3);
+                snake[1].X = 1245;
+                snake[1].Y = 300;
                 snp_3.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 4))
             {
                 snp_4 = new Thread(SnP_4);
+                snake[4].X = 1245;
+                snake[4].Y = 300;
                 snp_4.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 5))
             {
                 snp_5 = new Thread(SnP_5);
+                snake[3].X = 1245;
+                snake[3].Y = 300;
                 snp_5.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 6))
             {
                 snp_6 = new Thread(SnP_6);
+                snake[2].X = 1245;
+                snake[2].Y = 300;
                 snp_6.Start(train);
             }
             if ((((Train)train).direction == 2) && (((Train)train).LineID == 8))
             {
                 snp_8 = new Thread(SnP_8);
+                snake[0].X = 1245;
+                snake[0].Y = 300;
                 snp_8.Start(train);
             }
 
