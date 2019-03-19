@@ -249,8 +249,9 @@ namespace 站场图Practice
         }
         public void change_Click(object sender, EventArgs e)
         {
-            TimeTabel Ft = new TimeTabel();
+            TimeTabel Ft = new TimeTabel(totalSec);
             Ft.Show();
+           
         }
         public void SnP_3(object train)
         {
@@ -2071,18 +2072,56 @@ namespace 站场图Practice
         int p;
         int t;
         int n;
+
+
+        int switchs;
+
+        //以下的功能目的是为了调取系统的异或画笔
+        [DllImport("Gdi32.dll")]
+
+        static extern IntPtr CreatePen(int fnPenStyle, int width, int color);
+
+        [DllImport("Gdi32.dll")]
+
+        static extern int SetROP2(System.IntPtr hdc, int rop);
+        [DllImport("Gdi32.dll")]
+
+        static extern int MoveToEx(IntPtr hdc, int x, int y, IntPtr lppoint);
+
+        [DllImport("Gdi32.dll")]
+        static extern int LineTo(IntPtr hdc, int X, int Y);
+
+        [DllImport("Gdi32.dll")]
+
+        static extern IntPtr SelectObject(IntPtr hdc, IntPtr obj);
+
+
+
+
+
+        public int totalSec;
         Train[] train;
         int NumOfTrains;
+        Thread timeL = null;
+        Thread realTime = null;
+        Panel a = null;
 
 
-        public TimeTabel()
+
+  
+        public TimeTabel(int totalSec)
         {
+            timeL = new Thread(PlotTimeLine);
+           
+            switchs = 0;
+            this.totalSec = totalSec;
             this.Size = new Size(1500, 700);
-            Panel a = new Panel();
+            a = new Panel();
             a.Size = new Size(1500, 700);
             NumOfTrains = ReadCsv(ref train);
             a.Paint += new PaintEventHandler(panel_Paint);
             this.Controls.Add(a);
+            
         }
         public void panel_Paint(object sender, PaintEventArgs e)
         {
@@ -2176,6 +2215,13 @@ namespace 站场图Practice
             g.DrawString("5", f, Brushes.Black, 35, 190);
             g.DrawString("5", f, Brushes.Black, 35, 395);
             g.DrawString("5", f, Brushes.Black, 35, 600);
+
+            if (switchs == 0)
+            {
+                timeL.Start();
+               
+                switchs = 1;
+            }
 
         }
         public void DrawOperationLines(object train)
@@ -2335,6 +2381,80 @@ namespace 站场图Practice
                 }
             }
         }
+
+        public void PlotTimeLine()
+        {
+
+
+            while (true)
+            {
+                
+                totalSec++;
+
+                if (totalSec >= 21600 && totalSec <=50400)
+                {
+                    DrawTime(60 + (int)((totalSec - 21600) * 0.04), 35, Color.Yellow);
+                    Thread.Sleep(17);
+                    DrawTime(60 + (int)((totalSec - 21600) * 0.04), 35, Color.Yellow);
+                }
+                else if (totalSec >= 50400 && totalSec <= 79200)
+                {
+                    DrawTime(60 + (int)((totalSec - 50400) * 0.04), 240, Color.Yellow);
+                    Thread.Sleep(17);
+                    DrawTime(60 + (int)((totalSec - 50400) * 0.04), 240, Color.Yellow);
+                }
+                else if (totalSec >= 79200 && totalSec <= 86400)
+                {
+                    DrawTime(60 + (int)((totalSec - 79200) * 0.04), 445, Color.Yellow);
+                    Thread.Sleep(17);
+                    DrawTime(60 + (int)((totalSec - 79200) * 0.04), 445, Color.Yellow);
+                }
+                else if (totalSec >= 0 && totalSec <= 21600)
+                {
+                    DrawTime(60 + (int)(totalSec * 0.04), 445, Color.Yellow);
+                    Thread.Sleep(17); 
+                    DrawTime(60 + (int)(totalSec * 0.04), 445, Color.Yellow);
+                }
+                
+            }
+        }
+
+
+
+        public void DrawTime(int x, int y, System.Drawing.Color color)
+        {
+            try
+            {
+                
+                Graphics grfx = a.CreateGraphics();
+                System.IntPtr hdc = grfx.GetHdc();
+
+                //interop and good old GDI
+
+                System.IntPtr hpen =
+                CreatePen(0, 7, System.Drawing.ColorTranslator.ToWin32(color));
+
+                int rop = SetROP2(hdc, 7);
+
+                IntPtr oldpen = SelectObject(hdc, hpen);
+
+                MoveToEx(hdc, x, y, IntPtr.Zero);
+
+                LineTo(hdc, x, y+175);
+
+                SelectObject(hdc, oldpen);
+
+                SetROP2(hdc, rop);
+
+                grfx.ReleaseHdc(hdc);
+            }
+            catch (Exception e)
+            {
+                //snp_3.Abort();
+            }
+
+        }
+       
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
@@ -2400,6 +2520,7 @@ namespace 站场图Practice
     public class Login : Form
     {
         Button login;
+        Button openFile;
         TextBox id;
         TextBox password;
         Label password_label;
@@ -2460,7 +2581,7 @@ namespace 站场图Practice
         public void login_Click(object sender, EventArgs e)
         {
             Field Ft = new Field();
-            Ft.Show();
+            Ft.Show(); 
         }
 
     }
