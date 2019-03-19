@@ -73,7 +73,7 @@ namespace 站场图Practice
         Train[] trainx;
         int sec = 0;
 
-      
+
 
         System.Windows.Forms.Timer trainTimer = new System.Windows.Forms.Timer();
         Point[] snake = new Point[12];
@@ -164,7 +164,7 @@ namespace 站场图Practice
             change.Location = new Point(1050, 600);
             change.Text = "切换时刻图";
             change.Click += change_Click;//委托生成时刻图
-            change.BackColor = Color.White;            
+            change.BackColor = Color.White;
             back.Controls.Add(change);
             back.Visible = true;
 
@@ -187,7 +187,7 @@ namespace 站场图Practice
 
             //时刻图切换按钮
 
- 
+
 
             NumOfTrains = ReadCsv(ref train);
 
@@ -196,7 +196,7 @@ namespace 站场图Practice
 
             nums = 0;
             numx = 0;
-            
+
 
             //根据direction划分为两个数组，用以实现动画
             for (int i = 0; i < NumOfTrains; i++)
@@ -237,7 +237,8 @@ namespace 站场图Practice
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -346,13 +347,14 @@ namespace 站场图Practice
 
             }
 
-            g.FillRectangle(Brushes.White, new Rectangle(70, 60, 140, 75));
+           
 
         }
         public void SnP_5(object train)
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
             g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
@@ -470,12 +472,13 @@ namespace 站场图Practice
                 }
 
             }
-
+            
         }
         public void SnP_4(object train)
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
             g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
@@ -568,13 +571,14 @@ namespace 站场图Practice
                 }
 
             }
-
+            
         }
         public void SnP_6(object train)
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -680,14 +684,15 @@ namespace 站场图Practice
                 }
 
             }
-
+         
         }
         public void SnP_8(object train)
         {
 
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID+";"+"开放股道："+ ((Train)train).LineID+";" + "停车时间："+ ((float)(((Train)train).depTime- ((Train)train).arrTime)/60)+"分钟", font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -804,13 +809,13 @@ namespace 站场图Practice
                 }
 
             }
-            g.FillRectangle(Brushes.White, new Rectangle(70, 60, 140, 75));
         }
         public void Xnp_3(object train)
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -907,7 +912,8 @@ namespace 站场图Practice
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -1015,7 +1021,8 @@ namespace 站场图Practice
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -1129,7 +1136,8 @@ namespace 站场图Practice
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
 
             //主循环，控制动画
             while (true)
@@ -1255,8 +1263,9 @@ namespace 站场图Practice
 
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
-            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 120, 20));
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
+           
             //主循环，控制动画
             while (true)
             {
@@ -1385,13 +1394,14 @@ namespace 站场图Practice
 
             }
 
-           
+
         }
         public void Xp(object train)
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -1445,7 +1455,8 @@ namespace 站场图Practice
         {
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
-            g.DrawString("当前车次： " + ((Train)train).trainID, font, Brushes.White, (float)70, (float)60);
+            g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
+            g.DrawString("当前车次： " + ((Train)train).trainID + ";" + "开放股道：" + ((Train)train).LineID + ";" + "停车时间：" + ((float)(((Train)train).depTime - ((Train)train).arrTime) / 60) + "分钟", font, Brushes.White, (float)70, (float)60);
             //主循环，控制动画
             while (true)
             {
@@ -1512,7 +1523,7 @@ namespace 站场图Practice
                 IntPtr oldpen = SelectObject(hdc, hpen);
 
                 MoveToEx(hdc, x, y, IntPtr.Zero);
-                
+
                 LineTo(hdc, x + 40, y);
 
                 SelectObject(hdc, oldpen);
@@ -1862,18 +1873,18 @@ namespace 站场图Practice
         }
         public void NameThread()
         {
-//             snp_3 = new Thread(SnP_3);
-//             snp_5 = new Thread(SnP_5);
-//             snp_8 = new Thread(SnP_8);
-//             snp_6 = new Thread(SnP_6);
-//             snp_4 = new Thread(SnP_4);
-//             xnp_3 = new Thread(Xnp_3);
-//             xnp_5 = new Thread(Xnp_5);
-//             xnp_4 = new Thread(Xnp_4);
-//             xnp_6 = new Thread(Xnp_6);
-//             xnp_8 = new Thread(Xnp_8);
-//             xp = new Thread(Xp);
-//             sp = new Thread(Sp);
+            //             snp_3 = new Thread(SnP_3);
+            //             snp_5 = new Thread(SnP_5);
+            //             snp_8 = new Thread(SnP_8);
+            //             snp_6 = new Thread(SnP_6);
+            //             snp_4 = new Thread(SnP_4);
+            //             xnp_3 = new Thread(Xnp_3);
+            //             xnp_5 = new Thread(Xnp_5);
+            //             xnp_4 = new Thread(Xnp_4);
+            //             xnp_6 = new Thread(Xnp_6);
+            //             xnp_8 = new Thread(Xnp_8);
+            //             xp = new Thread(Xp);
+            //             sp = new Thread(Sp);
             timer = new Thread(ShowTime);
         }
         public void ShowTime()
@@ -1883,7 +1894,7 @@ namespace 站场图Practice
             Font font = new Font("宋体", 8);
             int hour = 0;
             int min = 0;
-            
+
             //循环，根据车辆总共数目走，等数目走完终止程序结束循环
             while (totalSec != 86400)
             {
@@ -1935,7 +1946,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -1953,7 +1964,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
@@ -2261,7 +2272,7 @@ namespace 站场图Practice
         public int ReadCsv(ref Train[] train)
         {
             //打开文件流
-            FileStream fs = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr = new StreamReader(fs, System.Text.Encoding.GetEncoding(936));
             string str = "";
             int num = 0;
@@ -2280,7 +2291,7 @@ namespace 站场图Practice
 
 
             sr.Close();
-            FileStream fs2 = new FileStream("traindata.csv", FileMode.Open, FileAccess.Read, FileShare.None);
+            FileStream fs2 = new FileStream("traindata 正点.csv", FileMode.Open, FileAccess.Read, FileShare.None);
             StreamReader sr2 = new StreamReader(fs2, System.Text.Encoding.GetEncoding(936));
 
             string str2 = "";
@@ -2378,7 +2389,7 @@ namespace 站场图Practice
             this.Controls.Add(password_label);
             this.Controls.Add(version);
 
-            
+
         }
         public void login_Click(object sender, EventArgs e)
         {
