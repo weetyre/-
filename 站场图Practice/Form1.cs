@@ -181,22 +181,19 @@ namespace 站场图Practice
             DrawLine();
      
             DrawRedLight(Xred);
-            DrawRedLight(X1red);
-            DrawRedLight(X2red);
             DrawRedLight(X3red);
             DrawRedLight(X4red);
             DrawRedLight(X5red);
             DrawRedLight(X8red);
             DrawRedLight(X6red);
             DrawRedLight(Xred);
-            DrawRedLight(S1red);
-            DrawRedLight(S2red);
             DrawRedLight(S3red);
             DrawRedLight(S4red);
             DrawRedLight(S5red);
             DrawRedLight(S8red);
             DrawRedLight(S6red);
             DrawRedLight(Sred);
+
 
             trainTimer.Interval = 300;
 
