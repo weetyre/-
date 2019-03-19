@@ -67,7 +67,7 @@ namespace 站场图Practice
         DateTime dt;
 
         //总分钟变化
-        public int totalSec = 32400;
+        public int totalSec = 52800;
 
         Train[] trains;
         Train[] trainx;
@@ -179,6 +179,25 @@ namespace 站场图Practice
 
             this.Show();
             DrawLine();
+     
+            DrawRedLight(Xred);
+            DrawRedLight(X1red);
+            DrawRedLight(X2red);
+            DrawRedLight(X3red);
+            DrawRedLight(X4red);
+            DrawRedLight(X5red);
+            DrawRedLight(X8red);
+            DrawRedLight(X6red);
+            DrawRedLight(Xred);
+            DrawRedLight(S1red);
+            DrawRedLight(S2red);
+            DrawRedLight(S3red);
+            DrawRedLight(S4red);
+            DrawRedLight(S5red);
+            DrawRedLight(S8red);
+            DrawRedLight(S6red);
+            DrawRedLight(Sred);
+
             trainTimer.Interval = 300;
 
             Font LineId = new Font("宋体", 8);
@@ -235,6 +254,9 @@ namespace 站场图Practice
         }
         public void SnP_3(object train)
         {
+            Point[] snake = new Point[12];
+            snake[1].X = 1245;
+            snake[1].Y = 300;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -286,6 +308,7 @@ namespace 站场图Practice
                 DrawTrain(snake[1].X, snake[1].Y, Color.Red);
                 if (snake[1].X == 420)
                 {
+                    count1 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
 
                     DrawGreenLight(S3Green);
@@ -352,6 +375,9 @@ namespace 站场图Practice
         }
         public void SnP_5(object train)
         {
+            Point[] snake = new Point[12];
+            snake[3].X = 1245;
+            snake[3].Y = 300;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -409,6 +435,7 @@ namespace 站场图Practice
                 DrawTrain(snake[3].X, snake[3].Y, Color.Red);
                 if (snake[3].X == 420)
                 {
+                    count3 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S5Green);
                     TurnOff(S5red);
@@ -476,6 +503,9 @@ namespace 站场图Practice
         }
         public void SnP_4(object train)
         {
+            Point[] snake = new Point[12];
+            snake[4].X = 1245;
+            snake[4].Y = 300;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -527,6 +557,7 @@ namespace 站场图Practice
                 DrawTrain(snake[4].X, snake[4].Y, Color.Red);
                 if (snake[4].X == 390)
                 {
+                    count4 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S4Green);
                     TurnOff(S4red);
@@ -575,6 +606,9 @@ namespace 站场图Practice
         }
         public void SnP_6(object train)
         {
+            Point[] snake = new Point[12];
+            snake[2].X = 1245;
+            snake[2].Y = 300;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -635,6 +669,7 @@ namespace 站场图Practice
                 DrawTrain(snake[2].X, snake[2].Y, Color.Red);
                 if (snake[2].X == 420)
                 {
+                    count2 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S6Green);
                     TurnOff(S6red);
@@ -688,7 +723,9 @@ namespace 站场图Practice
         }
         public void SnP_8(object train)
         {
-
+            Point[] snake = new Point[12];
+            snake[0].X = 1245;
+            snake[0].Y = 300;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -756,6 +793,7 @@ namespace 站场图Practice
                 DrawTrain(snake[0].X, snake[0].Y, Color.Red);
                 if (snake[0].X == 420)
                 {
+                    count = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(S8Green);
                     TurnOff(S8red);
@@ -795,6 +833,7 @@ namespace 站场图Practice
                         }
                         if (snake[0].X == -45)
                         {
+                            
                             break;
                         }
 
@@ -812,6 +851,9 @@ namespace 站场图Practice
         }
         public void Xnp_3(object train)
         {
+            Point[] snake = new Point[12];
+            snake[5].X = -45;
+            snake[5].Y = 250;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -863,6 +905,7 @@ namespace 站场图Practice
                 DrawTrain(snake[5].X, snake[5].Y, Color.Red);
                 if (snake[5].X == 555)
                 {
+                    count5 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X3Green);
                     TurnOff(X3red);
@@ -885,7 +928,7 @@ namespace 站场图Practice
                             snake[5].X = temp.X + 15;
                         }
                         DrawTrain(snake[5].X, snake[5].Y, Color.Red);
-                        if ((snake[5].X == 415) || (snake[5].X < 415))
+                        if ((snake[5].X == 415))
                         {
                             TurnOff(X3Green);
                             DrawRedLight(X3red);
@@ -910,6 +953,9 @@ namespace 站场图Practice
         }
         public void Xnp_5(object train)
         {
+            Point[] snake = new Point[12];
+            snake[6].X = -45;
+            snake[6].Y = 250;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -966,6 +1012,7 @@ namespace 站场图Practice
                 DrawTrain(snake[6].X, snake[6].Y, Color.Red);
                 if (snake[6].X == 555)
                 {
+                    count7 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X5Green);
                     TurnOff(X5red);
@@ -999,7 +1046,7 @@ namespace 站场图Practice
                             TurnOff(X5Green);
                             DrawRedLight(X5red);
                         }
-                        if (snake[6].X == 1200)
+                        if (snake[6].X == 1245)
                         {
                             break;
                         }
@@ -1008,7 +1055,7 @@ namespace 站场图Practice
                 }
 
                 //再退一次
-                if (snake[6].X == 1200)
+                if (snake[6].X == 1245)
                 {
                     DrawTrain(snake[6].X, snake[6].Y, Color.Red);
                     break;
@@ -1019,6 +1066,9 @@ namespace 站场图Practice
         }
         public void Xnp_4(object train)
         {
+            Point[] snake = new Point[12];
+            snake[7].X = -45;
+            snake[7].Y = 250;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -1077,6 +1127,7 @@ namespace 站场图Practice
                 DrawTrain(snake[7].X, snake[7].Y, Color.Red);
                 if (snake[7].X == 600)
                 {
+                    count6 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X4Green);
                     TurnOff(X4red);
@@ -1134,6 +1185,9 @@ namespace 站场图Practice
         }
         public void Xnp_6(object train)
         {
+            Point[] snake = new Point[12];
+            snake[8].X = -45;
+            snake[8].Y = 250;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -1198,6 +1252,7 @@ namespace 站场图Practice
                 DrawTrain(snake[8].X, snake[8].Y, Color.Red);
                 if (snake[8].X == 540)
                 {
+                    count8 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X6Green);
                     TurnOff(X6red);
@@ -1260,7 +1315,9 @@ namespace 站场图Practice
         }
         public void Xnp_8(object train)
         {
-
+            Point[] snake = new Point[12];
+            snake[9].X = -45;
+            snake[9].Y = 250;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -1329,11 +1386,13 @@ namespace 站场图Practice
                 DrawTrain(snake[9].X, snake[9].Y, Color.Red);
                 if (snake[9].X == 510)
                 {
+                    count9 = 0;
                     Thread.Sleep(16 * (((Train)train).depTime - ((Train)train).arrTime));
                     DrawGreenLight(X8Green);
                     TurnOff(X8red);
                     while (true)
                     {
+                        
                         Thread.Sleep(50);
                         temp = snake[9];
                         DrawTrain(snake[9].X, snake[9].Y, Color.Red);
@@ -1398,6 +1457,9 @@ namespace 站场图Practice
         }
         public void Xp(object train)
         {
+            Point[] snake = new Point[12];
+            snake[10].X = -45;
+            snake[10].Y = 250;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -1445,6 +1507,7 @@ namespace 站场图Practice
                 if (snake[10].X == 1200)
                 {
                     DrawTrain(snake[10].X, snake[10].Y, Color.Red);
+                    count10 = 0;
                     break;
                 }
 
@@ -1453,6 +1516,9 @@ namespace 站场图Practice
         }
         public void Sp(object train)
         {
+            Point[] snake = new Point[12];
+            snake[11].X = 1245;
+            snake[11].Y = 300;
             Graphics g = back.CreateGraphics();
             Font font = new Font("宋体", 10);
             g.FillRectangle(Brushes.Black, new Rectangle(70, 60, 340, 20));
@@ -1488,7 +1554,7 @@ namespace 站场图Practice
                     DrawRedLight(Sred);
                     TurnOff(SGreen);
                 }
-                if (snake[11].X < 1200)
+                if (snake[11].X < 1250)
                 {
                     snake[11].X = temp.X - 15;
                 }
@@ -1500,6 +1566,7 @@ namespace 站场图Practice
                 if (snake[11].X == -45)
                 {
                     DrawTrain(snake[11].X, snake[11].Y, Color.Red);
+                    count11 = 0;
                     break;
                 }
 
@@ -1749,9 +1816,7 @@ namespace 站场图Practice
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 5))
             {
-                xnp_5 = new Thread(Xnp_5);
-                snake[6].X = -45;
-                snake[6].Y = 250;
+                xnp_5 = new Thread(Xnp_5);               
                 xnp_5.Start(train);
             }
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 4))
@@ -1760,7 +1825,7 @@ namespace 站场图Practice
                 snake[7].X = -45;
                 snake[7].Y = 250;
                 xnp_4.Start(train);
-            }
+            } 
             if ((((Train)train).direction == 1) && (((Train)train).LineID == 6))
             {
                 xnp_6 = new Thread(Xnp_6);
@@ -1995,6 +2060,7 @@ namespace 站场图Practice
             sr2.Close();
             return num;
         }
+        
     }
     public class TimeTabel : Form  //时刻表的代码
     {
@@ -2028,7 +2094,7 @@ namespace 站场图Practice
             {
                 DrawOperationLines(train[i]);
             }
-            //纵线
+            //大纵线
             for (int i = 0; i <= 8; i++)
             {
                 g.DrawLine(new Pen(Color.Green, 3), 60 + 144 * i, 35, 60 + 144 * i, 210);
