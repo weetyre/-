@@ -2429,7 +2429,7 @@ namespace 站场图Practice
                 //interop and good old GDI
 
                 System.IntPtr hpen =
-                CreatePen(0, 7, System.Drawing.ColorTranslator.ToWin32(color));
+                CreatePen(0, 3, System.Drawing.ColorTranslator.ToWin32(color));
 
                 int rop = SetROP2(hdc, 7);
 
@@ -2523,12 +2523,24 @@ namespace 站场图Practice
         Label password_label;
         Label id_label;
         Label version;
+        String file;
+
+
 
 
         public Login()
         {
             this.Size = new Size(950, 650);
             this.BackgroundImage = Image.FromFile(System.IO.Path.GetFullPath("44.jpg"));
+
+            OpenFileDialog dialog = new OpenFileDialog();
+            dialog.Multiselect = true;
+            dialog.Title = "请选择文件夹";
+            dialog.Filter = "所有文件";
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                 file = dialog.FileName;
+            }
 
 
             login = new Button();
